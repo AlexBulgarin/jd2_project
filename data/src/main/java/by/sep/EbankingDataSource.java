@@ -4,14 +4,14 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class OBDataSource {
-    private static OBDataSource OBDataSource;
+public class EbankingDataSource {
+    private static EbankingDataSource ebankingDataSource;
 
-    private OBDataSource() throws ClassNotFoundException {
+    private EbankingDataSource() throws ClassNotFoundException {
         Class.forName("com.mysql.cj.jdbc.Driver");
     }
 
-    private Connection getListExpensesTestConnection() throws SQLException {
+    private Connection getOBConnection() throws SQLException {
         return DriverManager.getConnection(
                 "jdbc:mysql://localhost:3306/online_banking",
                 "user",
@@ -19,9 +19,9 @@ public class OBDataSource {
     }
 
     public static Connection getConnection() throws ClassNotFoundException, SQLException {
-        if (OBDataSource == null) {
-            OBDataSource = new OBDataSource();
+        if (ebankingDataSource == null) {
+            ebankingDataSource = new EbankingDataSource();
         }
-        return OBDataSource.getListExpensesTestConnection();
+        return ebankingDataSource.getOBConnection();
     }
 }

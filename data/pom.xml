@@ -62,7 +62,7 @@
                             <goal>update</goal>
                         </goals>
                         <configuration>
-                            <url>jdbc:mysql://localhost:3306/online_banking?createDatabaseIfNotExist=true</url>
+                            <url>jdbc:mysql://localhost:3306/ebanking?createDatabaseIfNotExist=true</url>
                         </configuration>
                     </execution>
                     <execution>
@@ -72,7 +72,7 @@
                             <goal>update</goal>
                         </goals>
                         <configuration>
-                            <url>jdbc:mysql://localhost:3306/online_banking_test?createDatabaseIfNotExist=true</url>
+                            <url>jdbc:mysql://localhost:3306/ebanking_test?createDatabaseIfNotExist=true</url>
                         </configuration>
                     </execution>
                 </executions>

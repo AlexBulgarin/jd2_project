@@ -3,7 +3,7 @@ package by.sep;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-public class OBSessionFactory {
+public class EbankingSessionFactory {
     private static SessionFactory sessionFactory;
 
     public static SessionFactory getSessionFactory() {
