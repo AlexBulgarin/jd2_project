@@ -1,4 +1,4 @@
-package by.sep;
+package by.sep.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

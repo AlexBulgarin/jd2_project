@@ -1,4 +1,4 @@
-package by.sep;
+package by.sep.util;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;

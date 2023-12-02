@@ -1,7 +1,7 @@
 package by.sep;
 
-import by.sep.pojos.Client;
 import by.sep.pojos.Product;
+import by.sep.util.EbankingSessionFactory;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
