@@ -2,10 +2,9 @@ package by.sep.pojos;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -14,9 +13,18 @@ public class Client {
     @Id
     @GenericGenerator(strategy = "uuid", name = "client_uuid")
     @GeneratedValue(generator = "client_uuid")
+    @Column(name = "CLIENT_ID")
     private String id;
+    @Column(name = "CLIENT_NAME")
     private String name;
+    @Column(name = "CLIENT_SURNAME")
     private String surname;
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinTable(name = "T_CLIENT_PRODUCT",
+            joinColumns = @JoinColumn(name = "CLIENT_ID"),
+            inverseJoinColumns = @JoinColumn(name = "PRODUCT_ID"))
+    private List<Product> products = new ArrayList<>();
+
 
     public Client() {
     }
@@ -51,6 +59,14 @@ public class Client {
         this.surname = surname;
     }
 
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -60,7 +76,8 @@ public class Client {
 
         if (!Objects.equals(id, client.id)) return false;
         if (!Objects.equals(name, client.name)) return false;
-        return Objects.equals(surname, client.surname);
+        if (!Objects.equals(surname, client.surname)) return false;
+        return Objects.equals(products, client.products);
     }
 
     @Override
@@ -68,6 +85,7 @@ public class Client {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (surname != null ? surname.hashCode() : 0);
+        result = 31 * result + (products != null ? products.hashCode() : 0);
         return result;
     }
 }
