@@ -10,5 +10,6 @@
         <property name="hibernate.show_sql">true</property>
 
         <mapping class="by.sep.pojos.Client"/>
+        <mapping class="by.sep.pojos.Product"/>
     </session-factory>
 </hibernate-configuration>
