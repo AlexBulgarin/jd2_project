@@ -19,6 +19,7 @@ public class Test {
         session.save(client);
         transaction.commit();
         session.close();
+        session = EbankingSessionFactory.getSessionFactory().openSession();
 
     }
 }
