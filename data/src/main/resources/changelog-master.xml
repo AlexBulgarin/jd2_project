@@ -24,4 +24,14 @@
         </sql>
     </changeSet>
 
+    <changeSet id="3" author="abulgarin">
+        <sql>
+            CREATE TABLE IF NOT EXISTS T_CLIENT_PRODUCT (
+            CLIENT_ID varchar(255),
+            PRODUCT_ID varchar(255),
+            foreign key (CLIENT_ID) REFERENCES T_CLIENT(ID)
+            foreign key (PRODUCT_ID) REFERENCES T_PRODUCT(ID)
+        </sql>
+    </changeSet>
+
 </databaseChangeLog>

@@ -13,5 +13,6 @@ public class Test {
         session.save(product);
         transaction.commit();
         session.close();
+
     }
 }
