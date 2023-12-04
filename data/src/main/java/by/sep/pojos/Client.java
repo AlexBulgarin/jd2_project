@@ -8,21 +8,21 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "T_CLIENT")
+@Table(name = "t_client")
 public class Client {
     @Id
     @GenericGenerator(strategy = "uuid", name = "client_uuid")
     @GeneratedValue(generator = "client_uuid")
-    @Column(name = "CLIENT_ID")
+    @Column(name = "client_id")
     private String id;
-    @Column(name = "CLIENT_NAME")
+    @Column(name = "first_name")
     private String name;
-    @Column(name = "CLIENT_SURNAME")
+    @Column(name = "last_name")
     private String surname;
-    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "T_CLIENT_PRODUCT",
-            joinColumns = @JoinColumn(name = "CLIENT_ID"),
-            inverseJoinColumns = @JoinColumn(name = "PRODUCT_ID"))
+            joinColumns = @JoinColumn(name = "client_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id"))
     private List<Product> products = new ArrayList<>();
 
 

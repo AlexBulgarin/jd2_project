@@ -8,19 +8,19 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "T_PRODUCT")
+@Table(name = "t_product")
 public class Product {
     @Id
     @GenericGenerator(strategy = "uuid", name = "product_uuid")
     @GeneratedValue(generator = "product_uuid")
-    @Column(name = "PRODUCT_ID")
+    @Column(name = "product_id")
     private String id;
-    @Column(name = "PRODUCT_NAME")
+    @Column(name = "product_name")
     private String name;
-    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "T_CLIENT_PRODUCT",
-            joinColumns = @JoinColumn(name = "PRODUCT_ID"),
-            inverseJoinColumns = @JoinColumn(name = "CLIENT_ID"))
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "client_id"))
     private List<Client> clients = new ArrayList<>();
 
     public Product() {
