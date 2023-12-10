@@ -1,5 +1,6 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="header.jsp"%>
+
     <div class="col-lg-8 mx-auto p-4 py-md-5">
       <main>
         <h1 class="text-body-emphasis">Get acquainted with our products</h1>
