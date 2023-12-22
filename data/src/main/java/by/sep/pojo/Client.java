@@ -1,8 +1,8 @@
-package by.sep.pojos;
+package by.sep.pojo;
 
-import org.hibernate.annotations.GenericGenerator;
+import jakarta.persistence.*;
+import org.hibernate.annotations.UuidGenerator;
 
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -11,15 +11,14 @@ import java.util.Objects;
 @Table(name = "t_client")
 public class Client {
     @Id
-    @GenericGenerator(strategy = "uuid", name = "client_uuid")
-    @GeneratedValue(generator = "client_uuid")
+    @UuidGenerator
     @Column(name = "client_id")
     private String id;
     @Column(name = "first_name")
-    private String name;
+    private String firstName;
     @Column(name = "last_name")
-    private String surname;
-    @ManyToMany(cascade = CascadeType.ALL)
+    private String lastName;
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(name = "T_CLIENT_PRODUCT",
             joinColumns = @JoinColumn(name = "client_id"),
             inverseJoinColumns = @JoinColumn(name = "product_id"))
@@ -29,10 +28,10 @@ public class Client {
     public Client() {
     }
 
-    public Client(String id, String name, String surname) {
+    public Client(String id, String firstName, String lastName) {
         this.id = id;
-        this.name = name;
-        this.surname = surname;
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
     public String getId() {
@@ -43,20 +42,20 @@ public class Client {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getSurname() {
-        return surname;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public List<Product> getProducts() {
@@ -75,17 +74,15 @@ public class Client {
         Client client = (Client) o;
 
         if (!Objects.equals(id, client.id)) return false;
-        if (!Objects.equals(name, client.name)) return false;
-        if (!Objects.equals(surname, client.surname)) return false;
-        return Objects.equals(products, client.products);
+        if (!Objects.equals(firstName, client.firstName)) return false;
+        return Objects.equals(lastName, client.lastName);
     }
 
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (surname != null ? surname.hashCode() : 0);
-        result = 31 * result + (products != null ? products.hashCode() : 0);
+        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
+        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
         return result;
     }
 }

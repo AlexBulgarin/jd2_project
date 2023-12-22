@@ -1,8 +1,8 @@
-package by.sep.pojos;
+package by.sep.pojo;
 
-import org.hibernate.annotations.GenericGenerator;
+import jakarta.persistence.*;
+import org.hibernate.annotations.UuidGenerator;
 
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -11,17 +11,16 @@ import java.util.Objects;
 @Table(name = "t_product")
 public class Product {
     @Id
-    @GenericGenerator(strategy = "uuid", name = "product_uuid")
-    @GeneratedValue(generator = "product_uuid")
+    @UuidGenerator
     @Column(name = "product_id")
     private String id;
     @Column(name = "product_name")
     private String name;
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(name = "T_CLIENT_PRODUCT",
             joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "client_id"))
-    private List<Client> clients = new ArrayList<>();
+    private List<List<Client>> clients = new ArrayList<>();
 
     public Product() {
     }
@@ -47,11 +46,11 @@ public class Product {
         this.name = name;
     }
 
-    public List<Client> getClients() {
+    public List<List<Client>> getClients() {
         return clients;
     }
 
-    public void setClients(List<Client> clients) {
+    public void setClients(List<List<Client>> clients) {
         this.clients = clients;
     }
 
@@ -63,15 +62,13 @@ public class Product {
         Product product = (Product) o;
 
         if (!Objects.equals(id, product.id)) return false;
-        if (!Objects.equals(name, product.name)) return false;
-        return Objects.equals(clients, product.clients);
+        return Objects.equals(name, product.name);
     }
 
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (clients != null ? clients.hashCode() : 0);
         return result;
     }
 }

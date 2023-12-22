@@ -10,7 +10,7 @@
             CREATE TABLE IF NOT EXISTS t_client (
             client_id varchar(255) not null,
             first_name varchar(255),
-            lat_name varchar(255),
+            last_name varchar(255),
             primary key (client_id));
         </sql>
     </changeSet>

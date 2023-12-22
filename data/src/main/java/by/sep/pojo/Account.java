@@ -1,4 +1,4 @@
-package by.sep.pojos;
+package by.sep.pojo;
 
 public class Account {
 }
