@@ -10,7 +10,9 @@
     <packaging>pom</packaging>
     <modules>
         <module>data</module>
+        <module>service</module>
         <module>web</module>
+
     </modules>
 
     <properties>

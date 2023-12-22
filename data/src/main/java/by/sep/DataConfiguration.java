@@ -1,4 +1,4 @@
-package by.sep.config;
+package by.sep;
 
 import by.sep.pojo.Account;
 import by.sep.pojo.Client;

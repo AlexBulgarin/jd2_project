@@ -24,14 +24,19 @@
         </sql>
     </changeSet>
 
-<!--    <changeSet id="3" author="abulgarin">-->
-<!--        <sql>-->
-<!--            CREATE TABLE IF NOT EXISTS t_client_product (-->
-<!--            client_id varchar(255),-->
-<!--            product_id varchar(255),-->
-<!--            foreign key (client_id) REFERENCES T_CLIENT(ID),-->
-<!--            foreign key (product_id) REFERENCES T_PRODUCT(ID));-->
-<!--        </sql>-->
-<!--    </changeSet>-->
+    <changeSet id="3" author="abulgarin">
+        <sql>
+            CREATE TABLE t_client_product (
+            client_id varchar(255) not null,
+            product_id varchar(255) not null,
+            KEY fk_client_id (client_id),
+            KEY fk_product_id (product_id),
+            CONSTRAINT fk_client_id FOREIGN KEY (client_id)
+            REFERENCES t_client (client_id),
+            CONSTRAINT fk_product_id FOREIGN KEY (product_id)
+            REFERENCES t_product (product_id)
+            );
+        </sql>
+    </changeSet>
 
 </databaseChangeLog>

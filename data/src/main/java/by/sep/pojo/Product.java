@@ -20,7 +20,7 @@ public class Product {
     @JoinTable(name = "T_CLIENT_PRODUCT",
             joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "client_id"))
-    private List<List<Client>> clients = new ArrayList<>();
+    private List<Client> clients = new ArrayList<>();
 
     public Product() {
     }
@@ -46,11 +46,11 @@ public class Product {
         this.name = name;
     }
 
-    public List<List<Client>> getClients() {
+    public List<Client> getClients() {
         return clients;
     }
 
-    public void setClients(List<List<Client>> clients) {
+    public void setClients(List<Client> clients) {
         this.clients = clients;
     }
 
