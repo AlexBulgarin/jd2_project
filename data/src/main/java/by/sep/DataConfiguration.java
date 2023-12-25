@@ -1,8 +1,5 @@
 package by.sep;
 
-import by.sep.pojo.Account;
-import by.sep.pojo.Client;
-import by.sep.pojo.Product;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.hibernate.SessionFactory;
@@ -21,7 +18,7 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
-@ComponentScan(basePackages = "by.sep")
+@ComponentScan(basePackages = "by.sep.dao")
 @PropertySource(value = {
         "classpath:liquibase.properties",
         "classpath:hibernate.properties"
@@ -69,11 +66,7 @@ public class DataConfiguration {
 
         sessionFactory.setHibernateProperties(hibernateProperties);
         sessionFactory.setDataSource(dataSource);
-        sessionFactory.setAnnotatedClasses(
-                Account.class,
-                Client.class,
-                Product.class
-        );
+        sessionFactory.setPackagesToScan("by.sep.pojo");
         return sessionFactory;
     }
 

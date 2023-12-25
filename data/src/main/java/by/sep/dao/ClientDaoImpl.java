@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Repository(value = "clientDao")
 @Transactional
-public class ClientDaoImpl extends BaseDao<Client> {
+public class ClientDaoImpl extends BaseDaoImpl<Client> implements ClientDao {
     @Autowired
     public ClientDaoImpl(SessionFactory sessionFactory) {
         super(sessionFactory);

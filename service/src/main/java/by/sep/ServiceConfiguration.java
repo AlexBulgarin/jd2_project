@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 @Configuration
-@ComponentScan(basePackages = "by.sep")
+@ComponentScan(basePackages = "by.sep.service")
 @Import(DataConfiguration.class)
 public class ServiceConfiguration {
 }
