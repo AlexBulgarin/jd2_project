@@ -1,4 +1,4 @@
-package by.sep.web;
+package by.sep.web.controller;
 
 import by.sep.dto.ClientDto;
 import by.sep.service.CreateClientService;

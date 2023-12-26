@@ -17,7 +17,7 @@ public class Product {
     @Column(name = "product_name")
     private String name;
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinTable(name = "T_CLIENT_PRODUCT",
+    @JoinTable(name = "t_client_product",
             joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "client_id"))
     private List<Client> clients = new ArrayList<>();
