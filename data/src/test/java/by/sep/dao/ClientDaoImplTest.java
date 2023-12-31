@@ -30,16 +30,17 @@ public class ClientDaoImplTest {
     Connection connection;
     String testId = UUID.randomUUID().toString();
     String testFirstName = "Test First Name";
-    String newTestFirstName = "New Test First Name";
     String testLastName = "Test Last Name";
-    String newTestLastName = "New Test Last Name";
 
     @Before
     public void setUp() throws Exception {
         connection = dataSource.getConnection();
         connection.createStatement().executeUpdate("INSERT INTO t_client " +
                 "(client_id, first_name, last_name) " +
-                "VALUES ('" + testId + "', '" + testFirstName + "', '" + testLastName + "');");
+                "VALUES ('" +
+                testId + "', '" +
+                testFirstName + "', '" +
+                testLastName + "');");
     }
 
     @After
@@ -73,6 +74,8 @@ public class ClientDaoImplTest {
     @Test
     public void testUpdateClient() {
         Client client = dao.read(Client.class, testId);
+        String newTestFirstName = "New Test First Name";
+        String newTestLastName = "New Test Last Name";
         client.setFirstName(newTestFirstName);
         client.setLastName(newTestLastName);
         boolean result = dao.update(client);

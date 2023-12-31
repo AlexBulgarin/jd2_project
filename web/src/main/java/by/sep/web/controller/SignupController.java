@@ -22,8 +22,9 @@ public class SignupController {
     @PostMapping("/signup")
     public ModelAndView getClientCreation(
             @RequestParam("firstName") String firstName,
-            @RequestParam("lastName") String lastName) {
-        service.createClient(new ClientDto(null, firstName, lastName));
+            @RequestParam("lastName") String lastName,
+            @RequestParam("email") String email) {
+        service.createClient(new ClientDto(null, firstName, lastName, email));
         return null;
     }
 }

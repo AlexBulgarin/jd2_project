@@ -8,27 +8,38 @@
     <changeSet id="1" author="abulgarin">
         <sql>
             CREATE TABLE IF NOT EXISTS t_client (
-            client_id varchar(255) not null,
-            first_name varchar(255),
-            last_name varchar(255),
-            primary key (client_id));
+            client_id varchar(255) NOT NULL,
+            first_name varchar(255) NOT NULL,
+            last_name varchar(255) NOT NULL,
+            PRIMARY KEY (client_id));
         </sql>
     </changeSet>
 
     <changeSet id="2" author="abulgarin">
         <sql>
+            CREATE TABLE IF NOT EXISTS t_client_login (
+            fk_client_id varchar(255) NOT NULL,
+            login varchar(255) NOT NULL UNIQUE,
+            password varchar(255) NOT NULL,
+            email varchar(255) NOT NULL,
+            PRIMARY KEY (fk_client_id),
+            FOREIGN KEY (fk_client_id) REFERENCES t_client (client_id));
+        </sql>
+    </changeSet>
+    <changeSet id="3" author="abulgarin">
+        <sql>
             CREATE TABLE IF NOT EXISTS t_product (
-            product_id varchar(255) not null,
-            product_name varchar(255) unique,
-            primary key (product_id));
+            product_id varchar(255) NOT NULL,
+            product_name varchar(255) UNIQUE,
+            PRIMARY KEY (product_id));
         </sql>
     </changeSet>
 
-    <changeSet id="3" author="abulgarin">
+    <changeSet id="4" author="abulgarin">
         <sql>
             CREATE TABLE t_client_product (
-            client_id varchar(255) not null,
-            product_id varchar(255) not null,
+            client_id varchar(255) NOT NULL,
+            product_id varchar(255) NOT NULL,
             KEY fk_client_id (client_id),
             KEY fk_product_id (product_id),
             CONSTRAINT fk_client_id FOREIGN KEY (client_id)

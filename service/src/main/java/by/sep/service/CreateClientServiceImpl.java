@@ -15,6 +15,10 @@ public class CreateClientServiceImpl implements CreateClientService {
 
     @Override
     public void createClient(ClientDto clientDto) {
-        dao.create(new Client(null, clientDto.getFirstName(), clientDto.getLastName()));
+        dao.create(new Client(
+                null,
+                clientDto.getFirstName(),
+                clientDto.getLastName(),
+                clientDto.getEmail()));
     }
 }

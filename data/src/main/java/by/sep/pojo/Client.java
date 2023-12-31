@@ -12,12 +12,15 @@ import java.util.Objects;
 public class Client {
     @Id
     @UuidGenerator
-    @Column(name = "client_id")
+    @Column(name = "client_id", nullable = false)
     private String id;
-    @Column(name = "first_name")
+    @Column(name = "first_name", nullable = false)
     private String firstName;
-    @Column(name = "last_name")
+    @Column(name = "last_name", nullable = false)
     private String lastName;
+    @OneToOne(mappedBy = "client", cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private ClientLogin registration;
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(name = "t_client_product",
             joinColumns = @JoinColumn(name = "client_id"),
@@ -56,6 +59,14 @@ public class Client {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public ClientLogin getRegistration() {
+        return registration;
+    }
+
+    public void setRegistration(ClientLogin registration) {
+        this.registration = registration;
     }
 
     public List<Product> getProducts() {
