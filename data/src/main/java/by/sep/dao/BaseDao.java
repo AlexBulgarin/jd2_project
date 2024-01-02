@@ -5,7 +5,7 @@ import java.io.Serializable;
 public interface BaseDao<T> {
     String create(T t);
 
-    T read(Class<T> clazz, Serializable id);
+    <S extends T> S read(Class<S> clazz, Serializable id);
 
     boolean update(T t);
 

@@ -1,5 +1,6 @@
-package by.sep.pojo;
+package by.sep.pojo.product;
 
+import by.sep.pojo.Client;
 import jakarta.persistence.*;
 import org.hibernate.annotations.UuidGenerator;
 
@@ -9,13 +10,18 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "t_product")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Product {
     @Id
     @UuidGenerator
-    @Column(name = "product_id")
+    @Column(name = "product_id", nullable = false)
     private String id;
-    @Column(name = "product_name")
+    @Column(name = "name", nullable = false)
     private String name;
+    @Column(name = "description", nullable = false)
+    private String description;
+    @Column(name = "duration_in_month", nullable = false)
+    private Integer durationInMonth;
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(name = "t_client_product",
             joinColumns = @JoinColumn(name = "product_id"),
@@ -25,9 +31,11 @@ public class Product {
     public Product() {
     }
 
-    public Product(String id, String name) {
+    public Product(String id, String name, String description, Integer durationInMonth) {
         this.id = id;
         this.name = name;
+        this.description = description;
+        this.durationInMonth = durationInMonth;
     }
 
     public String getId() {
@@ -46,6 +54,22 @@ public class Product {
         this.name = name;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Integer getDurationInMonth() {
+        return durationInMonth;
+    }
+
+    public void setDurationInMonth(Integer durationInMonth) {
+        this.durationInMonth = durationInMonth;
+    }
+
     public List<Client> getClients() {
         return clients;
     }
@@ -62,13 +86,17 @@ public class Product {
         Product product = (Product) o;
 
         if (!Objects.equals(id, product.id)) return false;
-        return Objects.equals(name, product.name);
+        if (!Objects.equals(name, product.name)) return false;
+        if (!Objects.equals(description, product.description)) return false;
+        return Objects.equals(durationInMonth, product.durationInMonth);
     }
 
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (durationInMonth != null ? durationInMonth.hashCode() : 0);
         return result;
     }
 }

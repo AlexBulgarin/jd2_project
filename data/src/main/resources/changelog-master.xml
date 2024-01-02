@@ -8,9 +8,9 @@
     <changeSet id="1" author="abulgarin">
         <sql>
             CREATE TABLE IF NOT EXISTS t_client (
-            client_id varchar(255) NOT NULL,
-            first_name varchar(255) NOT NULL,
-            last_name varchar(255) NOT NULL,
+            client_id VARCHAR(255) NOT NULL,
+            first_name VARCHAR(255) NOT NULL,
+            last_name VARCHAR(255) NOT NULL,
             PRIMARY KEY (client_id));
         </sql>
     </changeSet>
@@ -18,28 +18,53 @@
     <changeSet id="2" author="abulgarin">
         <sql>
             CREATE TABLE IF NOT EXISTS t_client_login (
-            fk_client_id varchar(255) NOT NULL,
-            login varchar(255) NOT NULL UNIQUE,
-            password varchar(255) NOT NULL,
-            email varchar(255) NOT NULL,
+            fk_client_id VARCHAR(255) NOT NULL,
+            login VARCHAR(255) NOT NULL UNIQUE,
+            password VARCHAR(255) NOT NULL,
+            email VARCHAR(255) NOT NULL,
             PRIMARY KEY (fk_client_id),
             FOREIGN KEY (fk_client_id) REFERENCES t_client (client_id));
         </sql>
     </changeSet>
+
     <changeSet id="3" author="abulgarin">
         <sql>
             CREATE TABLE IF NOT EXISTS t_product (
-            product_id varchar(255) NOT NULL,
-            product_name varchar(255) UNIQUE,
+            product_id VARCHAR(255) NOT NULL,
+            name VARCHAR(255) NOT NULL,
+            description VARCHAR(255) NOT NULL,
+            duration_in_month INT NOT NULL,
             PRIMARY KEY (product_id));
         </sql>
     </changeSet>
 
     <changeSet id="4" author="abulgarin">
         <sql>
+            CREATE TABLE IF NOT EXISTS t_product_loan (
+            fk_product_id VARCHAR(255) NOT NULL,
+            loan_rate DECIMAL(3,2) NOT NULL,
+            max_sum DECIMAL(8,2) NOT NULL,
+            PRIMARY KEY (fk_product_id),
+            FOREIGN KEY (fk_product_id) REFERENCES t_product (product_id));
+        </sql>
+    </changeSet>
+
+    <changeSet id="5" author="abulgarin">
+        <sql>
+            CREATE TABLE IF NOT EXISTS t_product_deposit (
+            fk_product_id VARCHAR(255) NOT NULL,
+            deposit_rate DECIMAL(3,2) NOT NULL,
+            min_sum DECIMAL(5,2) NOT NULL,
+            PRIMARY KEY (fk_product_id),
+            FOREIGN KEY (fk_product_id) REFERENCES t_product (product_id));
+        </sql>
+    </changeSet>
+
+    <changeSet id="6" author="abulgarin">
+        <sql>
             CREATE TABLE t_client_product (
-            client_id varchar(255) NOT NULL,
-            product_id varchar(255) NOT NULL,
+            client_id VARCHAR(255) NOT NULL,
+            product_id VARCHAR(255) NOT NULL,
             KEY fk_client_id (client_id),
             KEY fk_product_id (product_id),
             CONSTRAINT fk_client_id FOREIGN KEY (client_id)

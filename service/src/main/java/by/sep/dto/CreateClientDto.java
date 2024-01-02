@@ -1,18 +1,22 @@
 package by.sep.dto;
 
-public class ClientDto {
+public class CreateClientDto {
     private String id;
     private String firstName;
     private String lastName;
+    private String login;
+    private String password;
     private String email;
 
-    public ClientDto() {
+    public CreateClientDto() {
     }
 
-    public ClientDto(String id, String firstName, String lastName, String email) {
+    public CreateClientDto(String id, String firstName, String lastName, String login, String password, String email) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.login = login;
+        this.password = password;
         this.email = email;
     }
 
@@ -38,6 +42,22 @@ public class ClientDto {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getEmail() {

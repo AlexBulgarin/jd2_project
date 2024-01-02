@@ -24,8 +24,7 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public T read(Class<T> clazz, Serializable id) {
+    public <S extends T> S read(Class<S> clazz, Serializable id) {
         Session session = sessionFactory.getCurrentSession();
         return session.get(clazz, id);
     }

@@ -8,7 +8,7 @@ import java.util.Objects;
 @Table(name = "t_client_login")
 public class ClientLogin {
     @Id
-    @Column(name = "fk_client_id")
+    @Column(name = "fk_client_id", nullable = false)
     private String id;
     @Column(name = "login", unique = true, nullable = false)
     private String login;

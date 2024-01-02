@@ -1,5 +1,6 @@
 package by.sep.pojo;
 
+import by.sep.pojo.product.Product;
 import jakarta.persistence.*;
 import org.hibernate.annotations.UuidGenerator;
 
@@ -20,7 +21,7 @@ public class Client {
     private String lastName;
     @OneToOne(mappedBy = "client", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
-    private ClientLogin registration;
+    private ClientLogin clientLogin;
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(name = "t_client_product",
             joinColumns = @JoinColumn(name = "client_id"),
@@ -61,12 +62,12 @@ public class Client {
         this.lastName = lastName;
     }
 
-    public ClientLogin getRegistration() {
-        return registration;
+    public ClientLogin getClientLogin() {
+        return clientLogin;
     }
 
-    public void setRegistration(ClientLogin registration) {
-        this.registration = registration;
+    public void setClientLogin(ClientLogin clientLogin) {
+        this.clientLogin = clientLogin;
     }
 
     public List<Product> getProducts() {
