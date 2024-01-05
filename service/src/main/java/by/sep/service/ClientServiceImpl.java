@@ -15,7 +15,10 @@ public class ClientServiceImpl implements ClientService {
     ClientLoginDao dao;
 
     @Override
-    public void createClient(CreateClientDto createClientDto) {
+    public void createClient(CreateClientDto createClientDto) throws IllegalArgumentException {
+        if (createClientDto == null) {
+            throw new IllegalArgumentException("An argument createClientDto cannot be null");
+        }
         Client client = new Client(
                 null,
                 createClientDto.getFirstName(),

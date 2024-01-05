@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class SignupController {
@@ -19,8 +18,12 @@ public class SignupController {
     }
 
     @PostMapping("/signup")
-    public ModelAndView getClientCreation(CreateClientDto dto) {
-        service.createClient(dto);
+    public String getClientCreation(CreateClientDto dto) {
+        try {
+            service.createClient(dto);
+        } catch (IllegalArgumentException e) {
+            return "error-page";
+        }
         return null;
     }
 }
