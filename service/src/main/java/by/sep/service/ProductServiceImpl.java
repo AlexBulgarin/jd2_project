@@ -37,4 +37,9 @@ public class ProductServiceImpl implements ProductService {
         }
         dao.create(product);
     }
+
+    @Override
+    public void addProductToClient() {
+
+    }
 }

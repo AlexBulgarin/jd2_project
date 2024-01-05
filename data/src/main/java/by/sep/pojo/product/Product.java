@@ -1,5 +1,6 @@
 package by.sep.pojo.product;
 
+import by.sep.pojo.Account;
 import by.sep.pojo.Client;
 import jakarta.persistence.*;
 import org.hibernate.annotations.UuidGenerator;
@@ -27,6 +28,8 @@ public class Product {
             joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "client_id"))
     private List<Client> clients = new ArrayList<>();
+    @OneToMany(mappedBy = "product")
+    private List<Account> accounts;
 
     public Product() {
     }
@@ -76,6 +79,14 @@ public class Product {
 
     public void setClients(List<Client> clients) {
         this.clients = clients;
+    }
+
+    public List<Account> getAccounts() {
+        return accounts;
+    }
+
+    public void setAccounts(List<Account> accounts) {
+        this.accounts = accounts;
     }
 
     @Override
