@@ -80,10 +80,10 @@
             CREATE TABLE IF NOT EXISTS t_account (
             account_iban VARCHAR(34) NOT NULL,
             balance DECIMAL(20,2) NOT NULL,
-            currency VARCHAR(255) NOT NULL,
+            currency_name VARCHAR(255) NOT NULL,
             opening_date DATE NOT NULL,
-            fk_product_id VARCHAR(255) NOT NULL,
-            PRIMARY KEY (account_iban)),
+            fk_product_id VARCHAR(255),
+            PRIMARY KEY (account_iban),
             FOREIGN KEY (fk_product_id) REFERENCES t_product (product_id));
         </sql>
     </changeSet>
@@ -94,8 +94,8 @@
             card_number VARCHAR(19) NOT NULL,
             expiry_date DATE NOT NULL,
             cvv VARCHAR(3) NOT NULL,
-            fk_account_iban VARCHAR(34) NOT NULL,
-            PRIMARY KEY (card_number)),
+            fk_account_iban VARCHAR(34),
+            PRIMARY KEY (card_number),
             FOREIGN KEY (fk_account_iban) REFERENCES t_account (account_iban));
         </sql>
     </changeSet>

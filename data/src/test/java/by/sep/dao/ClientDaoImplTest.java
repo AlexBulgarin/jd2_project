@@ -52,8 +52,8 @@ public class ClientDaoImplTest {
     @Test
     public void testCreateClient() throws SQLException {
         String id = dao.create(new Client(null, testFirstName, testLastName));
-        assertNotNull(id);
 
+        assertNotNull(id);
         ResultSet resultSet = connection.createStatement()
                 .executeQuery("SELECT COUNT(*) FROM t_client");
         resultSet.next();

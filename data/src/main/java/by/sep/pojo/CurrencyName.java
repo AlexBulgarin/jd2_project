@@ -1,5 +1,5 @@
 package by.sep.pojo;
 
-public enum Currency {
+public enum CurrencyName {
     USD, EUR, RUB, BYN
 }

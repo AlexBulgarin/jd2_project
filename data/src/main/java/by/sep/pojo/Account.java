@@ -16,12 +16,12 @@ public class Account {
     @Column(name = "balance", nullable = false)
     private Double balance;
     @Enumerated(EnumType.STRING)
-    @Column(name = "currency", nullable = false)
-    private Currency currency;
+    @Column(name = "currency_name", nullable = false)
+    private CurrencyName currencyName;
     @Column(name = "opening_date", nullable = false)
     private LocalDate openingDate;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fk_product_id", nullable = false)
+    @JoinColumn(name = "fk_product_id")
     private Product product;
     @OneToMany(mappedBy = "account")
     private List<Card> cards;
@@ -29,10 +29,10 @@ public class Account {
     public Account() {
     }
 
-    public Account(String iban, Double balance, Currency currency, LocalDate openingDate) {
+    public Account(String iban, Double balance, CurrencyName currencyName, LocalDate openingDate) {
         this.iban = iban;
         this.balance = balance;
-        this.currency = currency;
+        this.currencyName = currencyName;
         this.openingDate = openingDate;
     }
 
@@ -52,12 +52,12 @@ public class Account {
         this.balance = balance;
     }
 
-    public Currency getCurrency() {
-        return currency;
+    public CurrencyName getCurrencyName() {
+        return currencyName;
     }
 
-    public void setCurrency(Currency currency) {
-        this.currency = currency;
+    public void setCurrencyName(CurrencyName currencyName) {
+        this.currencyName = currencyName;
     }
 
     public LocalDate getOpeningDate() {
@@ -93,7 +93,7 @@ public class Account {
 
         if (!Objects.equals(iban, account.iban)) return false;
         if (!Objects.equals(balance, account.balance)) return false;
-        if (currency != account.currency) return false;
+        if (currencyName != account.currencyName) return false;
         return Objects.equals(openingDate, account.openingDate);
     }
 
@@ -101,7 +101,7 @@ public class Account {
     public int hashCode() {
         int result = iban != null ? iban.hashCode() : 0;
         result = 31 * result + (balance != null ? balance.hashCode() : 0);
-        result = 31 * result + (currency != null ? currency.hashCode() : 0);
+        result = 31 * result + (currencyName != null ? currencyName.hashCode() : 0);
         result = 31 * result + (openingDate != null ? openingDate.hashCode() : 0);
         return result;
     }
