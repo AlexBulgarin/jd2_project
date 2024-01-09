@@ -82,6 +82,7 @@ public class CardDaoImplTest {
         card.setExpiryDate(newTestExpiryDate);
         card.setCvv(newTestCvv);
         boolean result = dao.update(card);
+        card = dao.read(Card.class, testNumber);
 
         assertTrue(result);
         assertEquals(newTestExpiryDate, card.getExpiryDate());

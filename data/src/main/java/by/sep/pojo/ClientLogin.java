@@ -8,7 +8,7 @@ import java.util.Objects;
 @Table(name = "t_client_login")
 public class ClientLogin {
     @Id
-    @Column(name = "fk_client_id", nullable = false)
+    @Column(name = "client_id", nullable = false)
     private String id;
     @Column(name = "login", unique = true, nullable = false)
     private String login;
@@ -18,7 +18,7 @@ public class ClientLogin {
     private String email;
     @OneToOne
     @MapsId
-    @JoinColumn(name = "fk_client_id")
+    @JoinColumn(name = "client_id")
     private Client client;
 
     public ClientLogin() {

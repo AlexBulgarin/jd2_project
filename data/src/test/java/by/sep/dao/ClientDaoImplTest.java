@@ -79,6 +79,7 @@ public class ClientDaoImplTest {
         client.setFirstName(newTestFirstName);
         client.setLastName(newTestLastName);
         boolean result = dao.update(client);
+        client = dao.read(Client.class, testId);
 
         assertTrue(result);
         assertEquals(newTestFirstName, client.getFirstName());

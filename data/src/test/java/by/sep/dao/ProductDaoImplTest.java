@@ -148,6 +148,7 @@ public class ProductDaoImplTest {
         loan.setLoanRate(newTestLoanRate);
         loan.setMaxSum(newTestLoanMaxSum);
         boolean result = dao.update(loan);
+        loan = dao.read(Loan.class, testLoanId);
 
         Deposit deposit = dao.read(Deposit.class, testDepositId);
         String newTestDepositName = "New Test Deposit Name";
@@ -161,6 +162,7 @@ public class ProductDaoImplTest {
         deposit.setDepositRate(newTestDepositRate);
         deposit.setMinSum(newTestDepositMinSum);
         boolean result1 = dao.update(deposit);
+        deposit = dao.read(Deposit.class, testDepositId);
 
         assertTrue(result);
         assertEquals(newTestLoanName, loan.getName());

@@ -18,12 +18,12 @@
     <changeSet id="2" author="abulgarin">
         <sql>
             CREATE TABLE IF NOT EXISTS t_client_login (
-            fk_client_id VARCHAR(255) NOT NULL,
+            client_id VARCHAR(255) NOT NULL,
             login VARCHAR(255) NOT NULL UNIQUE,
             password VARCHAR(255) NOT NULL,
             email VARCHAR(255) NOT NULL,
-            PRIMARY KEY (fk_client_id),
-            FOREIGN KEY (fk_client_id) REFERENCES t_client (client_id));
+            PRIMARY KEY (client_id),
+            FOREIGN KEY (client_id) REFERENCES t_client (client_id));
         </sql>
     </changeSet>
 
@@ -79,12 +79,12 @@
         <sql>
             CREATE TABLE IF NOT EXISTS t_account (
             account_iban VARCHAR(34) NOT NULL,
-            balance DECIMAL(20,2) NOT NULL,
+            balance DECIMAL(12,2) NOT NULL,
             currency_name VARCHAR(255) NOT NULL,
             opening_date DATE NOT NULL,
-            fk_product_id VARCHAR(255),
+            product_id VARCHAR(255),
             PRIMARY KEY (account_iban),
-            FOREIGN KEY (fk_product_id) REFERENCES t_product (product_id));
+            FOREIGN KEY (product_id) REFERENCES t_product (product_id));
         </sql>
     </changeSet>
 
@@ -94,9 +94,23 @@
             card_number VARCHAR(19) NOT NULL,
             expiry_date DATE NOT NULL,
             cvv VARCHAR(3) NOT NULL,
-            fk_account_iban VARCHAR(34),
+            account_iban VARCHAR(34),
             PRIMARY KEY (card_number),
-            FOREIGN KEY (fk_account_iban) REFERENCES t_account (account_iban));
+            FOREIGN KEY (account_iban) REFERENCES t_account (account_iban));
+        </sql>
+    </changeSet>
+
+    <changeSet id="9" author="abulgarin">
+        <sql>
+            CREATE TABLE IF NOT EXISTS t_transaction (
+            transaction_id VARCHAR(255) NOT NULL,
+            sum DECIMAL(10,2) NOT NULL,
+            transaction_date_time TIMESTAMP NOT NULL,
+            sender_account_iban VARCHAR(34) NOT NULL,
+            recipient_account_iban VARCHAR(34) NOT NULL,
+            PRIMARY KEY (transaction_id),
+            FOREIGN KEY (sender_account_iban) REFERENCES t_account (account_iban),
+            FOREIGN KEY (recipient_account_iban) REFERENCES t_account (account_iban));
         </sql>
     </changeSet>
 

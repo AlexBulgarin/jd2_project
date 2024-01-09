@@ -21,10 +21,14 @@ public class Account {
     @Column(name = "opening_date", nullable = false)
     private LocalDate openingDate;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fk_product_id")
+    @JoinColumn(name = "product_id")
     private Product product;
     @OneToMany(mappedBy = "account")
     private List<Card> cards;
+    @OneToMany(mappedBy = "senderAccount")
+    private List<Transaction> transactionsAsSender;
+    @OneToMany(mappedBy = "recipientAccount")
+    private List<Transaction> transactionsAsRecipient;
 
     public Account() {
     }
@@ -82,6 +86,22 @@ public class Account {
 
     public void setCards(List<Card> cards) {
         this.cards = cards;
+    }
+
+    public List<Transaction> getTransactionsAsSender() {
+        return transactionsAsSender;
+    }
+
+    public void setTransactionsAsSender(List<Transaction> transactionsAsSender) {
+        this.transactionsAsSender = transactionsAsSender;
+    }
+
+    public List<Transaction> getTransactionsAsRecipient() {
+        return transactionsAsRecipient;
+    }
+
+    public void setTransactionsAsRecipient(List<Transaction> transactionsAsRecipient) {
+        this.transactionsAsRecipient = transactionsAsRecipient;
     }
 
     @Override

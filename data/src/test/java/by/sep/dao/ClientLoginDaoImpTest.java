@@ -44,7 +44,7 @@ public class ClientLoginDaoImpTest {
                 "'Test First Name', " +
                 "'Test Last Name');");
         connection.createStatement().executeUpdate("INSERT INTO t_client_login " +
-                "(fk_client_id, login, password, email) " +
+                "(client_id, login, password, email) " +
                 "VALUES ('" +
                 testId + "', '" +
                 testLogin + "', '" +

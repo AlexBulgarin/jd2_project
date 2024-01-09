@@ -88,6 +88,7 @@ public class AccountDaoImplTest {
         account.setCurrencyName(newTestCurrencyName);
         account.setOpeningDate(newTestOpeningDate);
         boolean result = dao.update(account);
+        account = dao.read(Account.class, testIban);
 
         assertTrue(result);
         assertEquals(newTestBalance, account.getBalance());
