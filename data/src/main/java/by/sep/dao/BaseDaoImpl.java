@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 @Transactional
 public abstract class BaseDaoImpl<T> implements BaseDao<T> {
-    private final SessionFactory sessionFactory;
+    protected final SessionFactory sessionFactory;
 
     protected BaseDaoImpl(SessionFactory sessionFactory) {
         if (sessionFactory == null) {

@@ -7,7 +7,7 @@
         <p class="fs-5 col-md-8">Take a look to the list of Metro Bank products and their terms and conditions.</p>
 
         <div class="mb-5">
-          <a href="products.jsp" class="btn btn-primary btn-lg px-4">Products</a>
+          <a href="/bank/products" class="btn btn-primary btn-lg px-4">Products</a>
         </div>
 
         <hr class="col-3 col-md-2 mb-5">

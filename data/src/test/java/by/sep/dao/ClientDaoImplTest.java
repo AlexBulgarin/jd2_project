@@ -31,16 +31,18 @@ public class ClientDaoImplTest {
     String testId = UUID.randomUUID().toString();
     String testFirstName = "Test First Name";
     String testLastName = "Test Last Name";
+    String testEmail = "Test@test.com";
 
     @Before
     public void setUp() throws Exception {
         connection = dataSource.getConnection();
         connection.createStatement().executeUpdate("INSERT INTO t_client " +
-                "(client_id, first_name, last_name) " +
+                "(client_id, first_name, last_name, email) " +
                 "VALUES ('" +
                 testId + "', '" +
                 testFirstName + "', '" +
-                testLastName + "');");
+                testLastName + "', '" +
+                testEmail + "');");
     }
 
     @After
@@ -51,7 +53,8 @@ public class ClientDaoImplTest {
 
     @Test
     public void testCreateClient() throws SQLException {
-        String id = dao.create(new Client(null, testFirstName, testLastName));
+        testEmail = "NewTest@test.com";
+        String id = dao.create(new Client(null, testFirstName, testLastName, testEmail));
 
         assertNotNull(id);
         ResultSet resultSet = connection.createStatement()
@@ -69,6 +72,7 @@ public class ClientDaoImplTest {
         assertEquals(testId, client.getId());
         assertEquals(testFirstName, client.getFirstName());
         assertEquals(testLastName, client.getLastName());
+        assertEquals(testEmail, client.getEmail());
     }
 
     @Test
@@ -76,14 +80,17 @@ public class ClientDaoImplTest {
         Client client = dao.read(Client.class, testId);
         String newTestFirstName = "New Test First Name";
         String newTestLastName = "New Test Last Name";
+        String newTestEmail = "NewTest@test.com";
         client.setFirstName(newTestFirstName);
         client.setLastName(newTestLastName);
+        client.setEmail(newTestEmail);
         boolean result = dao.update(client);
         client = dao.read(Client.class, testId);
 
         assertTrue(result);
         assertEquals(newTestFirstName, client.getFirstName());
         assertEquals(newTestLastName, client.getLastName());
+        assertEquals(newTestEmail, client.getEmail());
     }
 
 
@@ -98,5 +105,16 @@ public class ClientDaoImplTest {
         resultSet.next();
         int actualCount = resultSet.getInt(1);
         assertEquals(0, actualCount);
+    }
+
+    @Test
+    public void readByEmail() {
+        Client client = dao.readByEmail(testEmail);
+
+        assertNotNull(client);
+        assertEquals(testId, client.getId());
+        assertEquals(testFirstName, client.getFirstName());
+        assertEquals(testLastName, client.getLastName());
+        assertEquals(testEmail, client.getEmail());
     }
 }

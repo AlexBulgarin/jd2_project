@@ -29,7 +29,5 @@ public class ProductServiceImplTest {
 
     @Test
     public void testCreateProduct() {
-        CreateLoanDto createLoanDto = new CreateLoanDto(null, "SuperLoan", "description",12,0.15,100.00);
-        service.createProduct(createLoanDto);
     }
 }

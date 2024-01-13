@@ -11,6 +11,7 @@
             client_id VARCHAR(255) NOT NULL,
             first_name VARCHAR(255) NOT NULL,
             last_name VARCHAR(255) NOT NULL,
+            email VARCHAR(255) NOT NULL UNIQUE,
             PRIMARY KEY (client_id));
         </sql>
     </changeSet>
@@ -21,7 +22,7 @@
             client_id VARCHAR(255) NOT NULL,
             login VARCHAR(255) NOT NULL UNIQUE,
             password VARCHAR(255) NOT NULL,
-            email VARCHAR(255) NOT NULL,
+            role VARCHAR(255),
             PRIMARY KEY (client_id),
             FOREIGN KEY (client_id) REFERENCES t_client (client_id));
         </sql>
@@ -111,6 +112,15 @@
             PRIMARY KEY (transaction_id),
             FOREIGN KEY (sender_account_iban) REFERENCES t_account (account_iban),
             FOREIGN KEY (recipient_account_iban) REFERENCES t_account (account_iban));
+        </sql>
+    </changeSet>
+
+    <changeSet id="10" author="abulgarin" failOnError="false">
+        <sql>
+            INSERT INTO ebanking.t_client
+            VALUES('aaaabbbbccccddddeeeeffff00000001', 'admin', 'adminov', 'admin@google.com');
+            INSERT INTO ebanking.t_client_login
+            VALUES('aaaabbbbccccddddeeeeffff00000001', 'admin', 'admin', 'ROLE_ADMIN');
         </sql>
     </changeSet>
 

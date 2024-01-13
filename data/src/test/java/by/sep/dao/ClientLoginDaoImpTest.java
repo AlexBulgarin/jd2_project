@@ -32,24 +32,23 @@ public class ClientLoginDaoImpTest {
     String testId = UUID.randomUUID().toString();
     String testLogin = "Test Login";
     String testPassword = "Test Password";
-    String testEmail = "Test@test.com";
 
     @Before
     public void setUp() throws Exception {
         connection = dataSource.getConnection();
         connection.createStatement().executeUpdate("INSERT INTO t_client " +
-                "(client_id, first_name, last_name) " +
+                "(client_id, first_name, last_name, email) " +
                 "VALUES ('" +
                 testId + "', " +
                 "'Test First Name', " +
-                "'Test Last Name');");
+                "'Test Last Name', " +
+                "'Test@test.com');");
         connection.createStatement().executeUpdate("INSERT INTO t_client_login " +
-                "(client_id, login, password, email) " +
+                "(client_id, login, password) " +
                 "VALUES ('" +
                 testId + "', '" +
                 testLogin + "', '" +
-                testPassword + "', '" +
-                testEmail + "');");
+                testPassword + "');");
     }
 
     @After
@@ -61,9 +60,10 @@ public class ClientLoginDaoImpTest {
 
     @Test
     public void testCreateClientLogin() throws SQLException {
-        Client client = new Client(null, "Test First Name", "Test Last Name");
+        Client client = new Client(null, "Test First Name",
+                "Test Last Name", "Test1@test.com");
         testLogin = "Test Login 1";
-        ClientLogin clientLogin = new ClientLogin(null, testLogin, testPassword, testEmail);
+        ClientLogin clientLogin = new ClientLogin(null, testLogin, testPassword);
         clientLogin.setClient(client);
         String id = dao.create(clientLogin);
         assertNotNull(id);
@@ -83,7 +83,6 @@ public class ClientLoginDaoImpTest {
         assertEquals(testId, clientLogin.getId());
         assertEquals(testLogin, clientLogin.getLogin());
         assertEquals(testPassword, clientLogin.getPassword());
-        assertEquals(testEmail, clientLogin.getEmail());
     }
 
     @Test
@@ -91,16 +90,14 @@ public class ClientLoginDaoImpTest {
         ClientLogin clientLogin = dao.read(ClientLogin.class, testId);
         String newTestLogin = "New Test Login";
         String newTestPassword = "New Test Password";
-        String newTestEmail = "NewTest@test.org";
         clientLogin.setLogin(newTestLogin);
         clientLogin.setPassword(newTestPassword);
-        clientLogin.setEmail(newTestEmail);
+
         boolean result = dao.update(clientLogin);
 
         assertTrue(result);
         assertEquals(newTestLogin, clientLogin.getLogin());
         assertEquals(newTestPassword, clientLogin.getPassword());
-        assertEquals(newTestEmail, clientLogin.getEmail());
     }
 
     @Test
@@ -114,5 +111,14 @@ public class ClientLoginDaoImpTest {
         resultSet.next();
         int actualCount = resultSet.getInt(1);
         assertEquals(0, actualCount);
+    }
+
+    @Test
+    public void testFindByLogin() {
+        ClientLogin clientLogin = dao.findByLogin(testLogin);
+
+        assertNotNull(clientLogin);
+        assertEquals(testLogin, clientLogin.getLogin());
+        assertEquals(testPassword, clientLogin.getPassword());
     }
 }

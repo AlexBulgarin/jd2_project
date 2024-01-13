@@ -14,8 +14,8 @@ public class ClientLogin {
     private String login;
     @Column(name = "password", nullable = false)
     private String password;
-    @Column(name = "email", nullable = false)
-    private String email;
+    @Column(name = "role")
+    private String role;
     @OneToOne
     @MapsId
     @JoinColumn(name = "client_id")
@@ -24,11 +24,10 @@ public class ClientLogin {
     public ClientLogin() {
     }
 
-    public ClientLogin(String id, String login, String password, String email) {
+    public ClientLogin(String id, String login, String password) {
         this.id = id;
         this.login = login;
         this.password = password;
-        this.email = email;
     }
 
     public String getId() {
@@ -55,20 +54,20 @@ public class ClientLogin {
         this.password = password;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public Client getClient() {
         return client;
     }
 
     public void setClient(Client client) {
         this.client = client;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     @Override
@@ -81,7 +80,7 @@ public class ClientLogin {
         if (!Objects.equals(id, that.id)) return false;
         if (!Objects.equals(login, that.login)) return false;
         if (!Objects.equals(password, that.password)) return false;
-        return Objects.equals(email, that.email);
+        return Objects.equals(role, that.role);
     }
 
     @Override
@@ -89,7 +88,7 @@ public class ClientLogin {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (login != null ? login.hashCode() : 0);
         result = 31 * result + (password != null ? password.hashCode() : 0);
-        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (role != null ? role.hashCode() : 0);
         return result;
     }
 }

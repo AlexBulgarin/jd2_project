@@ -15,4 +15,11 @@ public class ClientLoginDaoImp extends BaseDaoImpl<ClientLogin>
         super(sessionFactory);
     }
 
+    @Override
+    public ClientLogin findByLogin(String login) {
+        return sessionFactory.getCurrentSession()
+                .createQuery("from ClientLogin where login=:login", ClientLogin.class)
+                .setParameter("login", login)
+                .getSingleResult();
+    }
 }

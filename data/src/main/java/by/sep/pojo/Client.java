@@ -19,6 +19,8 @@ public class Client {
     private String firstName;
     @Column(name = "last_name", nullable = false)
     private String lastName;
+    @Column(name = "email", nullable = false, unique = true)
+    private String email;
     @OneToOne(mappedBy = "client", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     private ClientLogin clientLogin;
@@ -32,10 +34,11 @@ public class Client {
     public Client() {
     }
 
-    public Client(String id, String firstName, String lastName) {
+    public Client(String id, String firstName, String lastName, String email) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.email = email;
     }
 
     public String getId() {
@@ -60,6 +63,14 @@ public class Client {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public ClientLogin getClientLogin() {
@@ -87,7 +98,8 @@ public class Client {
 
         if (!Objects.equals(id, client.id)) return false;
         if (!Objects.equals(firstName, client.firstName)) return false;
-        return Objects.equals(lastName, client.lastName);
+        if (!Objects.equals(lastName, client.lastName)) return false;
+        return Objects.equals(email, client.email);
     }
 
     @Override
@@ -95,6 +107,7 @@ public class Client {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
         return result;
     }
 }

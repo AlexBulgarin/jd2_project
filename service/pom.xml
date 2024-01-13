@@ -22,7 +22,6 @@
             <groupId>by.sep</groupId>
             <artifactId>data</artifactId>
             <version>1.0.0</version>
-            <scope>compile</scope>
         </dependency>
         <!-- Spring -->
         <dependency>
@@ -40,6 +39,10 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-tx</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
         </dependency>
         <!-- Logging -->
         <dependency>

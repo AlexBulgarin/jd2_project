@@ -13,4 +13,12 @@ public class ClientDaoImpl extends BaseDaoImpl<Client> implements ClientDao {
     public ClientDaoImpl(SessionFactory sessionFactory) {
         super(sessionFactory);
     }
+
+    @Override
+    public Client readByEmail(String email) {
+        return sessionFactory.getCurrentSession()
+                .createQuery("from Client where email=:email", Client.class)
+                .setParameter("email", email)
+                .getSingleResult();
+    }
 }

@@ -1,7 +1,9 @@
 package by.sep.service;
 
+import by.sep.dao.ClientDao;
 import by.sep.dao.ClientLoginDao;
 import by.sep.dto.CreateClientDto;
+import by.sep.dto.CreateClientLoginDto;
 import by.sep.pojo.Client;
 import by.sep.pojo.ClientLogin;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,23 +14,35 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class ClientServiceImpl implements ClientService {
     @Autowired
-    ClientLoginDao dao;
+    ClientDao clientDao;
+    @Autowired
+    ClientLoginDao clientLoginDao;
 
     @Override
-    public void createClient(CreateClientDto createClientDto) throws IllegalArgumentException {
+    public void createClient(CreateClientDto createClientDto) {
         if (createClientDto == null) {
             throw new IllegalArgumentException("An argument createClientDto cannot be null");
         }
         Client client = new Client(
                 null,
                 createClientDto.getFirstName(),
-                createClientDto.getLastName());
-        ClientLogin clientLogin = new ClientLogin(
-                null,
-                createClientDto.getLogin(),
-                createClientDto.getPassword(),
+                createClientDto.getLastName(),
                 createClientDto.getEmail());
+        clientDao.create(client);
+    }
+
+    @Override
+    public void createClientLogin(CreateClientLoginDto createClientLoginDto) {
+        if (createClientLoginDto == null) {
+            throw new IllegalArgumentException("An argument createClientLoginDto cannot be null");
+        }
+        Client client = clientDao.readByEmail(createClientLoginDto.getEmail());
+        ClientLogin clientLogin = new ClientLogin(
+                client.getId(),
+                createClientLoginDto.getLogin(),
+                createClientLoginDto.getPassword());
+        clientLogin.setRole("ROLE_USER");
         clientLogin.setClient(client);
-        dao.create(clientLogin);
+        clientLoginDao.create(clientLogin);
     }
 }
