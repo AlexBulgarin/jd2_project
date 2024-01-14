@@ -2,6 +2,7 @@ package by.sep.dao;
 
 import by.sep.TestDataConfiguration;
 import by.sep.pojo.Card;
+import org.iban4j.Iban;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,6 +17,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -46,6 +48,7 @@ public class CardDaoImplTest {
     @After
     public void tearDown() throws Exception {
         connection.createStatement().executeUpdate("DELETE FROM t_card");
+        connection.createStatement().executeUpdate("DELETE FROM t_account");
         connection.close();
     }
 
@@ -101,5 +104,24 @@ public class CardDaoImplTest {
         resultSet.next();
         int actualCount = resultSet.getInt(1);
         assertEquals(0, actualCount);
+    }
+
+    @Test
+    public void testReadAllByIban() throws SQLException {
+        String testIban = Iban.random().toString();
+        connection.createStatement().executeUpdate("INSERT INTO t_account " +
+                "(account_iban, balance, currency_name, opening_date) " +
+                "VALUES('" +
+                testIban + "', " +
+                "111.11, " +
+                "'USD', " +
+                "NOW());");
+        connection.createStatement().executeUpdate("UPDATE t_card " +
+                "SET account_iban='" + testIban + "' " +
+                "WHERE card_number='" + testNumber + "';");
+        List<Card> cards = dao.readAllByIban(testIban);
+
+        assertNotNull(cards);
+        assertEquals(1, cards.size());
     }
 }

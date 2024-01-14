@@ -77,9 +77,11 @@ public class ProductDaoImplTest {
 
     @After
     public void tearDown() throws Exception {
+        connection.createStatement().executeUpdate("DELETE FROM t_client_product");
         connection.createStatement().executeUpdate("DELETE FROM t_product_loan");
         connection.createStatement().executeUpdate("DELETE FROM t_product_deposit");
         connection.createStatement().executeUpdate("DELETE FROM t_product");
+        connection.createStatement().executeUpdate("DELETE FROM t_client");
         connection.close();
     }
 
@@ -210,10 +212,32 @@ public class ProductDaoImplTest {
     }
 
     @Test
-    public void readAllProducts() {
+    public void testReadAllProducts() {
         List<Product> products = dao.readAllProducts();
 
         assertNotNull(products);
         assertEquals(2, products.size());
+    }
+
+    @Test
+    public void testReadAllByClientId() throws SQLException {
+        String testClientId = UUID.randomUUID().toString();
+        connection.createStatement().executeUpdate("INSERT INTO t_client " +
+                "(client_id, first_name, last_name, email) " +
+                "VALUES ('" +
+                testClientId + "', " +
+                "'Test First Name', " +
+                "'Test Last Name', " +
+                "'Test@test.com');");
+        connection.createStatement().executeUpdate("INSERT INTO t_client_product " +
+                "(client_id, product_id) " +
+                "VALUES('" +
+                testClientId + "', '" +
+                testDepositId + "');");
+        List<Product> products = dao.readAllByClientId(testClientId);
+
+        assertNotNull(products);
+        assertEquals(1, products.size());
+
     }
 }

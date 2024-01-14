@@ -90,7 +90,7 @@ public class ProductServiceImpl implements ProductService {
         Product product = productDao.read(Product.class, productId);
         Account account = new Account(Iban.random().toString(), openProductDto.getBalance(),
                 openProductDto.getCurrencyName(), LocalDate.now());
-        Card card = new Card(generateCardNumber(), LocalDate.now(), generateCvv());
+        Card card = new Card(generateCardNumber(), LocalDate.now().plusYears(5), generateCvv());
         card.setAccount(account);
         account.getCards().add(card);
         account.setProduct(product);

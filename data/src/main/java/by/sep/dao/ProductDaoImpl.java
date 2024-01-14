@@ -23,4 +23,14 @@ public class ProductDaoImpl extends BaseDaoImpl<Product> implements ProductDao {
                 .createQuery("from Product", Product.class)
                 .list();
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Product> readAllByClientId(String clientId) {
+        return sessionFactory.getCurrentSession()
+                .createQuery("select p from Product p join p.clients c where c.id = :clientId",
+                        Product.class)
+                .setParameter("clientId", clientId)
+                .list();
+    }
 }

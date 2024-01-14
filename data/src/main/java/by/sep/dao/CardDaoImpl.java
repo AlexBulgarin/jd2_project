@@ -6,11 +6,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Repository
 @Transactional
 public class CardDaoImpl extends BaseDaoImpl<Card> implements CardDao {
     @Autowired
     protected CardDaoImpl(SessionFactory sessionFactory) {
         super(sessionFactory);
+    }
+
+    @Override
+    public List<Card> readAllByIban(String iban) {
+        return sessionFactory.getCurrentSession()
+                .createQuery("select c from Card c where c.account.iban = :iban",
+                        Card.class)
+                .setParameter("iban", iban)
+                .list();
     }
 }

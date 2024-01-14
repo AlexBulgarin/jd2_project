@@ -18,6 +18,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.List;
+import java.util.UUID;
 
 import static org.junit.Assert.*;
 
@@ -50,6 +52,7 @@ public class AccountDaoImplTest {
     @After
     public void tearDown() throws Exception {
         connection.createStatement().executeUpdate("DELETE FROM t_account");
+        connection.createStatement().executeUpdate("DELETE FROM t_product");
         connection.close();
     }
 
@@ -108,5 +111,24 @@ public class AccountDaoImplTest {
         resultSet.next();
         int actualCount = resultSet.getInt(1);
         assertEquals(0, actualCount);
+    }
+
+    @Test
+    public void testReadAllByProductId() throws SQLException {
+        String testProductId = UUID.randomUUID().toString();
+        connection.createStatement().executeUpdate("INSERT INTO t_product " +
+                "(product_id, name, description, duration_in_month) " +
+                "VALUES('" +
+                testProductId + "', " +
+                "'Test Product Name', " +
+                "'Test Product Description', " +
+                "1);");
+        connection.createStatement().executeUpdate("UPDATE t_account " +
+                "SET product_id='" + testProductId + "' " +
+                "WHERE account_iban='" + testIban + "';");
+        List<Account> accounts = dao.readAllByProductId(testProductId);
+
+        assertNotNull(accounts);
+        assertEquals(1, accounts.size());
     }
 }
