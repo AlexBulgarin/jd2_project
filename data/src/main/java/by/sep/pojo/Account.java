@@ -4,6 +4,7 @@ import by.sep.pojo.product.Product;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -23,12 +24,12 @@ public class Account {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     private Product product;
-    @OneToMany(mappedBy = "account")
-    private List<Card> cards;
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
+    private List<Card> cards = new ArrayList<>();
     @OneToMany(mappedBy = "senderAccount")
-    private List<Transaction> transactionsAsSender;
+    private List<Transaction> transactionsAsSender = new ArrayList<>();
     @OneToMany(mappedBy = "recipientAccount")
-    private List<Transaction> transactionsAsRecipient;
+    private List<Transaction> transactionsAsRecipient = new ArrayList<>();
 
     public Account() {
     }

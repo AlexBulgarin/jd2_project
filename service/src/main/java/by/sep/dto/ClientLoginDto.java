@@ -1,16 +1,16 @@
 package by.sep.dto;
 
-public class CreateClientLoginDto {
+public class ClientLoginDto {
     private String id;
     private String login;
     private String password;
     private String role;
     private String email;
 
-    public CreateClientLoginDto() {
+    public ClientLoginDto() {
     }
 
-    public CreateClientLoginDto(String id, String login, String password, String role, String email) {
+    public ClientLoginDto(String id, String login, String password, String role, String email) {
         this.id = id;
         this.login = login;
         this.password = password;

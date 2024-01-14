@@ -1,14 +1,14 @@
 package by.sep.dto;
 
-public class CreateLoanDto extends CreateProductDto{
+public class LoanDto extends ProductDto {
     private double loanRate;
     private double maxSum;
 
-    public CreateLoanDto() {
+    public LoanDto() {
     }
 
-    public CreateLoanDto(String id, String name, String description,
-                         int durationInMonth, double loanRate, double maxSum) {
+    public LoanDto(String id, String name, String description,
+                   int durationInMonth, double loanRate, double maxSum) {
         super(id, name, description, durationInMonth);
         this.loanRate = loanRate;
         this.maxSum = maxSum;

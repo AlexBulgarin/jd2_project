@@ -124,4 +124,33 @@
         </sql>
     </changeSet>
 
+    <changeSet id="11" author="abulgarin" failOnError="false">
+        <sql>
+            INSERT INTO ebanking.t_product
+            (product_id, name, description, duration_in_month)
+            VALUES
+            ('71ece2f5-9017-4e7d-b91b-357bd5b5c1a6', 'Salary Card', 'Open salary card in our bank and be sure the money you earn always to be available', 36),
+            ('6d70f6fd-e1d9-4cfc-8ada-d03688bd6fa7', 'Bonus+ Card', 'Open bonus+ card in our bank and get up to 5% moneyback for every purchase', 24),
+            ('feeee6b8-1bd9-4dba-a095-efdffd2dabfc', 'Pension Card', 'Open pension card in our bank and get additional discount for products and medical purchases', 48),
+            ('8e1e1d47-3ef9-42a3-bd0c-bbcc1da36c82', 'Car credit', 'Get car credit and buy the car of your dream', 60),
+            ('d666fc89-2528-43e9-b5d7-ada493a16751', 'Home credit', 'Get home credit and live comfortably', 120),
+            ('d0ccd77b-5ddb-4d6b-8d99-32891e11192e', 'Consumer loan', 'Get consumer loan for any purchase you like', 12),
+            ('ddf9a8d7-16a5-41d8-a0ad-f8d46288556f', 'Short-term deposit', 'Open short-term deposit and earn money', 3),
+            ('28e9e6f2-7f91-4460-870a-b18416aa779e', 'Mid-term deposit', 'Open mid-term deposit and earn money', 9),
+            ('57454af4-75a5-4022-bfd6-800444f31384', 'Long-term deposit', 'Open long-term deposit and earn money', 15);
+            INSERT INTO ebanking.t_product_loan
+            (fk_product_id, loan_rate, max_sum)
+            VALUES
+            ('8e1e1d47-3ef9-42a3-bd0c-bbcc1da36c82', 0.12, 40000),
+            ('d666fc89-2528-43e9-b5d7-ada493a16751', 0.1, 100000),
+            ('d0ccd77b-5ddb-4d6b-8d99-32891e11192e', 0.14, 5000);
+            INSERT INTO ebanking.t_product_deposit
+            (fk_product_id, deposit_rate, min_sum)
+            VALUES
+            ('ddf9a8d7-16a5-41d8-a0ad-f8d46288556f', 0.03, 100),
+            ('28e9e6f2-7f91-4460-870a-b18416aa779e', 0.04, 300),
+            ('57454af4-75a5-4022-bfd6-800444f31384', 0.05, 500);
+        </sql>
+    </changeSet>
+
 </databaseChangeLog>

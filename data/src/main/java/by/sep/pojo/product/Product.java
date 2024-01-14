@@ -23,13 +23,11 @@ public class Product {
     private String description;
     @Column(name = "duration_in_month", nullable = false)
     private Integer durationInMonth;
-    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinTable(name = "t_client_product",
-            joinColumns = @JoinColumn(name = "product_id"),
-            inverseJoinColumns = @JoinColumn(name = "client_id"))
+    @ManyToMany(mappedBy = "products",
+            cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private List<Client> clients = new ArrayList<>();
-    @OneToMany(mappedBy = "product")
-    private List<Account> accounts;
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<Account> accounts = new ArrayList<>();
 
     public Product() {
     }

@@ -1,14 +1,14 @@
 package by.sep.dto;
 
-public class CreateClientDto {
+public class ClientDto {
     private String firstName;
     private String lastName;
     private String email;
 
-    public CreateClientDto() {
+    public ClientDto() {
     }
 
-    public CreateClientDto(String firstName, String lastName, String email) {
+    public ClientDto(String firstName, String lastName, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;

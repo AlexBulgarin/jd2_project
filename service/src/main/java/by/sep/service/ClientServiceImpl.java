@@ -2,8 +2,8 @@ package by.sep.service;
 
 import by.sep.dao.ClientDao;
 import by.sep.dao.ClientLoginDao;
-import by.sep.dto.CreateClientDto;
-import by.sep.dto.CreateClientLoginDto;
+import by.sep.dto.ClientDto;
+import by.sep.dto.ClientLoginDto;
 import by.sep.pojo.Client;
 import by.sep.pojo.ClientLogin;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,28 +19,28 @@ public class ClientServiceImpl implements ClientService {
     ClientLoginDao clientLoginDao;
 
     @Override
-    public void createClient(CreateClientDto createClientDto) {
-        if (createClientDto == null) {
-            throw new IllegalArgumentException("An argument createClientDto cannot be null");
+    public void createClient(ClientDto clientDto) {
+        if (clientDto == null) {
+            throw new IllegalArgumentException("An argument createClientDto can not be null");
         }
         Client client = new Client(
                 null,
-                createClientDto.getFirstName(),
-                createClientDto.getLastName(),
-                createClientDto.getEmail());
+                clientDto.getFirstName(),
+                clientDto.getLastName(),
+                clientDto.getEmail());
         clientDao.create(client);
     }
 
     @Override
-    public void createClientLogin(CreateClientLoginDto createClientLoginDto) {
-        if (createClientLoginDto == null) {
-            throw new IllegalArgumentException("An argument createClientLoginDto cannot be null");
+    public void createClientLogin(ClientLoginDto clientLoginDto) {
+        if (clientLoginDto == null) {
+            throw new IllegalArgumentException("An argument createClientLoginDto can not be null");
         }
-        Client client = clientDao.readByEmail(createClientLoginDto.getEmail());
+        Client client = clientDao.readByEmail(clientLoginDto.getEmail());
         ClientLogin clientLogin = new ClientLogin(
                 client.getId(),
-                createClientLoginDto.getLogin(),
-                createClientLoginDto.getPassword());
+                clientLoginDto.getLogin(),
+                clientLoginDto.getPassword());
         clientLogin.setRole("ROLE_USER");
         clientLogin.setClient(client);
         clientLoginDao.create(clientLogin);

@@ -1,6 +1,6 @@
 package by.sep.controller;
 
-import by.sep.dto.CreateClientDto;
+import by.sep.dto.ClientDto;
 import by.sep.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
@@ -27,7 +27,7 @@ public class AdminController {
 
     @Secured("ROLE_ADMIN")
     @PostMapping("/admin/add-client")
-    public String getClientCreation(CreateClientDto dto) {
+    public String getClientCreation(ClientDto dto) {
         service.createClient(dto);
         return "admin";
     }

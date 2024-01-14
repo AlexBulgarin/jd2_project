@@ -16,6 +16,7 @@ public class ClientLoginDaoImp extends BaseDaoImpl<ClientLogin>
     }
 
     @Override
+    @Transactional(readOnly = true)
     public ClientLogin findByLogin(String login) {
         return sessionFactory.getCurrentSession()
                 .createQuery("from ClientLogin where login=:login", ClientLogin.class)

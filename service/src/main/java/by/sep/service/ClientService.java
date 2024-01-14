@@ -1,9 +1,9 @@
 package by.sep.service;
 
-import by.sep.dto.CreateClientDto;
-import by.sep.dto.CreateClientLoginDto;
+import by.sep.dto.ClientDto;
+import by.sep.dto.ClientLoginDto;
 
 public interface ClientService {
-    void createClient(CreateClientDto createClientDto);
-    void createClientLogin(CreateClientLoginDto createClientLoginDto);
+    void createClient(ClientDto clientDto);
+    void createClientLogin(ClientLoginDto clientLoginDto);
 }

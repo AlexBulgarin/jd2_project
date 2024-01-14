@@ -1,14 +1,14 @@
 package by.sep.dto;
 
-public class CreateDepositDto extends CreateProductDto{
+public class DepositDto extends ProductDto {
     private double depositRate;
     private double minSum;
 
-    public CreateDepositDto() {
+    public DepositDto() {
     }
 
-    public CreateDepositDto(String id, String name, String description,
-                            int durationInMonth, double depositRate, double minSum) {
+    public DepositDto(String id, String name, String description,
+                      int durationInMonth, double depositRate, double minSum) {
         super(id, name, description, durationInMonth);
         this.depositRate = depositRate;
         this.minSum = minSum;

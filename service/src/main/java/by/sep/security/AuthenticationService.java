@@ -38,4 +38,8 @@ public class AuthenticationService implements UserDetailsService {
             throw new UsernameNotFoundException("User not found: " + username, e);
         }
     }
+
+    public String getIdByUsername(String username) {
+        return loginDao.findByLogin(username).getId();
+    }
 }

@@ -15,6 +15,7 @@ public class ClientDaoImpl extends BaseDaoImpl<Client> implements ClientDao {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Client readByEmail(String email) {
         return sessionFactory.getCurrentSession()
                 .createQuery("from Client where email=:email", Client.class)

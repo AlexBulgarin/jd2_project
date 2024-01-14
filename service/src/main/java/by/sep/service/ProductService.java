@@ -1,8 +1,16 @@
 package by.sep.service;
 
-import by.sep.dto.CreateProductDto;
+import by.sep.dto.OpenProductDto;
+import by.sep.dto.ProductDto;
+
+import java.util.List;
 
 public interface ProductService {
-    void createProduct(CreateProductDto createProductDto);
-    void addProductToClient();
+    void createProduct(ProductDto productDto);
+
+    ProductDto readById(String id);
+
+    void addProductToClient(String clientId, String productId, OpenProductDto openProductDto);
+
+    <T extends ProductDto> List<T> readProducts(Class<T> clazz);
 }

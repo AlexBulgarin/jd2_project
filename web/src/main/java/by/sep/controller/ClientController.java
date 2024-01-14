@@ -1,6 +1,6 @@
 package by.sep.controller;
 
-import by.sep.dto.CreateClientLoginDto;
+import by.sep.dto.ClientLoginDto;
 import by.sep.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
@@ -19,7 +19,7 @@ public class ClientController {
     }
 
     @PostMapping("/register")
-    public String getLoginCreation(CreateClientLoginDto dto) {
+    public String getLoginCreation(ClientLoginDto dto) {
         try {
             service.createClientLogin(dto);
         } catch (IllegalArgumentException e) {

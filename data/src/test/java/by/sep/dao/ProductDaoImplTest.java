@@ -3,6 +3,7 @@ package by.sep.dao;
 import by.sep.TestDataConfiguration;
 import by.sep.pojo.product.Deposit;
 import by.sep.pojo.product.Loan;
+import by.sep.pojo.product.Product;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,6 +17,7 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.UUID;
 
 import static org.junit.Assert.*;
@@ -205,5 +207,13 @@ public class ProductDaoImplTest {
         resultSet.next();
         actualCount = resultSet.getInt(1);
         assertEquals(0, actualCount);
+    }
+
+    @Test
+    public void readAllProducts() {
+        List<Product> products = dao.readAllProducts();
+
+        assertNotNull(products);
+        assertEquals(2, products.size());
     }
 }

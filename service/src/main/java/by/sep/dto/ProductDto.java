@@ -1,15 +1,15 @@
 package by.sep.dto;
 
-public class CreateProductDto {
+public class ProductDto {
     private String id;
     private String name;
     private String description;
     private int durationInMonth;
 
-    public CreateProductDto() {
+    public ProductDto() {
     }
 
-    public CreateProductDto(String id, String name, String description, int durationInMonth) {
+    public ProductDto(String id, String name, String description, int durationInMonth) {
         this.id = id;
         this.name = name;
         this.description = description;
