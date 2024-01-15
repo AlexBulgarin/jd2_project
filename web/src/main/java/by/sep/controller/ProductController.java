@@ -45,7 +45,7 @@ public class ProductController {
     }
 
     @PostMapping("products/open-{id}")
-    public String getProductOpening(Authentication authentication, @PathVariable("id") String productId,
+    public String openProduct(Authentication authentication, @PathVariable("id") String productId,
                                     OpenProductDto dto) {
         if (authentication != null) {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();

@@ -1,9 +1,9 @@
 package by.sep.service;
 
-import by.sep.dto.AccountDetailsDto;
+import by.sep.dto.AccountDto;
 
 import java.util.List;
 
 public interface AccountService {
-    List<AccountDetailsDto> readDetails(String clientId);
+    List<AccountDto> readAccountsByClientId(String clientId);
 }

@@ -52,6 +52,8 @@ public class AccountDaoImplTest {
     @After
     public void tearDown() throws Exception {
         connection.createStatement().executeUpdate("DELETE FROM t_account");
+        connection.createStatement().executeUpdate("DELETE FROM t_client_product");
+        connection.createStatement().executeUpdate("DELETE FROM t_client");
         connection.createStatement().executeUpdate("DELETE FROM t_product");
         connection.close();
     }
@@ -114,8 +116,16 @@ public class AccountDaoImplTest {
     }
 
     @Test
-    public void testReadAllByProductId() throws SQLException {
+    public void testReadAccountsByClientId() throws SQLException {
+        String testClientId = UUID.randomUUID().toString();
         String testProductId = UUID.randomUUID().toString();
+        connection.createStatement().executeUpdate("INSERT INTO t_client " +
+                "(client_id, first_name, last_name, email) " +
+                "VALUES ('" +
+                testClientId + "', " +
+                "'Test First Name', " +
+                "'Test Last Name', " +
+                "'Test@test.com');");
         connection.createStatement().executeUpdate("INSERT INTO t_product " +
                 "(product_id, name, description, duration_in_month) " +
                 "VALUES('" +
@@ -123,10 +133,13 @@ public class AccountDaoImplTest {
                 "'Test Product Name', " +
                 "'Test Product Description', " +
                 "1);");
+        connection.createStatement().executeUpdate("INSERT INTO t_client_product " +
+                "(client_id, product_id) " +
+                "VALUES('" + testClientId + "', '" + testProductId + "');");
         connection.createStatement().executeUpdate("UPDATE t_account " +
                 "SET product_id='" + testProductId + "' " +
                 "WHERE account_iban='" + testIban + "';");
-        List<Account> accounts = dao.readAllByProductId(testProductId);
+        List<Account> accounts = dao.readAccountsByClientId(testClientId);
 
         assertNotNull(accounts);
         assertEquals(1, accounts.size());

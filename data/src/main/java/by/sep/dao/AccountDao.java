@@ -5,5 +5,5 @@ import by.sep.pojo.Account;
 import java.util.List;
 
 public interface AccountDao extends BaseDao<Account>{
-    List<Account> readAllByProductId(String productId);
+    List<Account> readAccountsByClientId(String clientId);
 }

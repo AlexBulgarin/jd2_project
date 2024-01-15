@@ -17,11 +17,11 @@ public class AccountDaoImpl extends BaseDaoImpl<Account> implements AccountDao{
     }
 
     @Override
-    public List<Account> readAllByProductId(String productId) {
+    public List<Account> readAccountsByClientId(String clientId) {
         return sessionFactory.getCurrentSession()
-                .createQuery("select a from Account a where a.product.id = :productId",
-                        Account.class)
-                .setParameter("productId", productId)
+                .createQuery("SELECT a FROM Account a JOIN a.product p " +
+                        "JOIN p.clients c WHERE c.id = :clientId", Account.class)
+                .setParameter("clientId", clientId)
                 .list();
     }
 }

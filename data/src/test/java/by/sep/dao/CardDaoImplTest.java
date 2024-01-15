@@ -107,7 +107,7 @@ public class CardDaoImplTest {
     }
 
     @Test
-    public void testReadAllByIban() throws SQLException {
+    public void testReadCardsByIban() throws SQLException {
         String testIban = Iban.random().toString();
         connection.createStatement().executeUpdate("INSERT INTO t_account " +
                 "(account_iban, balance, currency_name, opening_date) " +
@@ -119,7 +119,7 @@ public class CardDaoImplTest {
         connection.createStatement().executeUpdate("UPDATE t_card " +
                 "SET account_iban='" + testIban + "' " +
                 "WHERE card_number='" + testNumber + "';");
-        List<Card> cards = dao.readAllByIban(testIban);
+        List<Card> cards = dao.readCardsByIban(testIban);
 
         assertNotNull(cards);
         assertEquals(1, cards.size());

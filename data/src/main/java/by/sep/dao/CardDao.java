@@ -5,5 +5,5 @@ import by.sep.pojo.Card;
 import java.util.List;
 
 public interface CardDao extends BaseDao<Card>{
-    List<Card> readAllByIban(String iban);
+    List<Card> readCardsByIban(String iban);
 }
