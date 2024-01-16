@@ -1,11 +1,9 @@
 package by.sep.service;
 
+import by.sep.dao.AccountDao;
 import by.sep.dao.ClientDao;
 import by.sep.dao.ProductDao;
-import by.sep.dto.DepositDto;
-import by.sep.dto.LoanDto;
-import by.sep.dto.OpenProductDto;
-import by.sep.dto.ProductDto;
+import by.sep.dto.*;
 import by.sep.pojo.Account;
 import by.sep.pojo.Card;
 import by.sep.pojo.Client;
@@ -27,6 +25,8 @@ public class ProductServiceImpl implements ProductService {
     ProductDao productDao;
     @Autowired
     ClientDao clientDao;
+    @Autowired
+    AccountDao accountDao;
 
     @Override
     public void createProduct(ProductDto productDto) {
@@ -97,6 +97,16 @@ public class ProductServiceImpl implements ProductService {
         product.getAccounts().add(account);
         client.getProducts().add(product);
         clientDao.update(client);
+    }
+
+    @Override
+    public void addNewCardToExistingAccount(String iban) {
+        Account account = accountDao.read(Account.class, iban);
+        Card card = new Card(generateCardNumber(), LocalDate.now().plusYears(5), generateCvv());
+        account.getCards().add(card);
+        card.setAccount(account);
+        accountDao.update(account);
+
     }
 
     private String generateCardNumber() {

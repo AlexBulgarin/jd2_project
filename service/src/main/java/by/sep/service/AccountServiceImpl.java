@@ -20,6 +20,8 @@ public class AccountServiceImpl implements AccountService {
     AccountDao accountDao;
     @Autowired
     CardDao cardDao;
+    @Autowired
+    ProductService productService;
 
     @Override
     public List<AccountDto> readAccountsByClientId(String clientId) {
@@ -32,7 +34,7 @@ public class AccountServiceImpl implements AccountService {
                     .toList();
             AccountDto accountDto = new AccountDto(
                     account.getIban(),
-                    account.getProduct().getName(),
+                    productService.readById(account.getProduct().getId()),
                     account.getBalance(),
                     account.getCurrencyName(),
                     cardDtos

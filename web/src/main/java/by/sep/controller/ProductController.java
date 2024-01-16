@@ -20,15 +20,15 @@ import java.util.List;
 @Controller
 public class ProductController {
     @Autowired
-    ProductService service;
+    ProductService productService;
     @Autowired
     AuthenticationService authenticationService;
 
     @GetMapping("/products")
     public ModelAndView getProducts() {
-        List<ProductDto> products = service.readProducts(ProductDto.class);
-        List<LoanDto> loans = service.readProducts(LoanDto.class);
-        List<DepositDto> deposits = service.readProducts(DepositDto.class);
+        List<ProductDto> products = productService.readProducts(ProductDto.class);
+        List<LoanDto> loans = productService.readProducts(LoanDto.class);
+        List<DepositDto> deposits = productService.readProducts(DepositDto.class);
         ModelAndView modelAndView = new ModelAndView("products");
         modelAndView.addObject("products", products);
         modelAndView.addObject("loans", loans);
@@ -38,7 +38,7 @@ public class ProductController {
 
     @GetMapping("products/open-{id}")
     public ModelAndView getProductOpeningPage(@PathVariable("id") String id) {
-        ProductDto productDto = service.readById(id);
+        ProductDto productDto = productService.readById(id);
         ModelAndView modelAndView = new ModelAndView("open-product");
         modelAndView.addObject(productDto);
         return modelAndView;
@@ -46,13 +46,19 @@ public class ProductController {
 
     @PostMapping("products/open-{id}")
     public String openProduct(Authentication authentication, @PathVariable("id") String productId,
-                                    OpenProductDto dto) {
+                              OpenProductDto dto) {
         if (authentication != null) {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
             String username = userDetails.getUsername();
             String clientId = authenticationService.getIdByUsername(username);
-            service.addProductToClient(clientId, productId, dto);
+            productService.addProductToClient(clientId, productId, dto);
         }
-        return "client";
+        return "redirect:/client";
+    }
+
+    @GetMapping("client/add-card-{iban}")
+    public String issueAdditionalCard(@PathVariable("iban") String iban) {
+        productService.addNewCardToExistingAccount(iban);
+        return "redirect:/client";
     }
 }

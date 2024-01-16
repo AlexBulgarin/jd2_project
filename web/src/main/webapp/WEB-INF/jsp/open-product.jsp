@@ -14,7 +14,7 @@
       </select>
   </div>
     <div class="mb-3">
-      <label for="balance" class="form-label">Input password</label>
+      <label for="balance" class="form-label">Input sum</label>
       <input type="number" class="form-control" id="balance" name="balance">
     </div>
   <button type="submit" class="btn btn-primary">Submit</button>

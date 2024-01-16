@@ -6,7 +6,7 @@ import java.util.List;
 
 public class AccountDto {
     private String iban;
-    private String productName;
+    private ProductDto productDto;
     private double balance;
     private CurrencyName currencyName;
     private List<CardDto> cards;
@@ -14,10 +14,10 @@ public class AccountDto {
     public AccountDto() {
     }
 
-    public AccountDto(String iban, String productName, double balance,
+    public AccountDto(String iban, ProductDto productDto, double balance,
                       CurrencyName currencyName, List<CardDto> cards) {
         this.iban = iban;
-        this.productName = productName;
+        this.productDto = productDto;
         this.balance = balance;
         this.currencyName = currencyName;
         this.cards = cards;
@@ -31,12 +31,12 @@ public class AccountDto {
         this.iban = iban;
     }
 
-    public String getProductName() {
-        return productName;
+    public ProductDto getProductDto() {
+        return productDto;
     }
 
-    public void setProductName(String productName) {
-        this.productName = productName;
+    public void setProductDto(ProductDto productDto) {
+        this.productDto = productDto;
     }
 
     public double getBalance() {

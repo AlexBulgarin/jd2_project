@@ -51,7 +51,12 @@ public class ProductServiceImplTest {
     }
 
     @Test
-    public void testAddProductToClient() {
+    public void addProductToClient() {
 
+    }
+
+    @Test
+    public void addNewCardToExistingAccount() {
+        service.addNewCardToExistingAccount("LI1865207QPERNE8KY8KU");
     }
 }
