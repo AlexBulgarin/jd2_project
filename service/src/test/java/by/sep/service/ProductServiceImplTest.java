@@ -26,8 +26,8 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
-import static org.junit.Assert.*;
-import static org.mockito.ArgumentMatchers.any;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -51,7 +51,7 @@ public class ProductServiceImplTest {
     Account account;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         product = new Product(productTestId, "test Name",
                 "test Description", 1);
         loan = new Loan(loanTestId, "test Name",

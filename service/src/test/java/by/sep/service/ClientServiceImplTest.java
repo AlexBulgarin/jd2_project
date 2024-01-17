@@ -35,7 +35,7 @@ public class ClientServiceImplTest {
     String testEmail = "Test@test.com";
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         Client client = new Client(testId, testName, testLastName, testEmail);
         when(clientDao.readByEmail(testEmail)).thenReturn(client);
     }

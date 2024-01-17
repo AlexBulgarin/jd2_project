@@ -43,7 +43,7 @@ public class TransactionServiceImplTest {
     String testNumber = "Test Number";
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         senderAccount = new Account(senderIban, senderBalance, CurrencyName.BYN, LocalDate.now());
         recipientAccount = new Account(recipientIban, recipientBalance, CurrencyName.BYN, LocalDate.now());
         card = new Card(testNumber, LocalDate.now().plusMonths(22), "364");
