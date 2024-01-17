@@ -5,5 +5,6 @@ import by.sep.dto.ClientLoginDto;
 
 public interface ClientService {
     void createClient(ClientDto clientDto);
+
     void createClientLogin(ClientLoginDto clientLoginDto);
 }

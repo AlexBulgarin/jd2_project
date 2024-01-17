@@ -29,40 +29,6 @@ public class ProductServiceImpl implements ProductService {
     AccountDao accountDao;
 
     @Override
-    public void createProduct(ProductDto productDto) {
-        if (productDto == null) {
-            throw new IllegalArgumentException("An argument createProductDto can not be null");
-        }
-        Product product = new Product(null, productDto.getName(),
-                productDto.getDescription(), productDto.getDurationInMonth());
-        if (productDto instanceof LoanDto) {
-            Loan loan = new Loan();
-            loan.setLoanRate(((LoanDto) productDto).getLoanRate());
-            loan.setMaxSum(((LoanDto) productDto).getMaxSum());
-            product = loan;
-        } else if (productDto instanceof DepositDto) {
-            Deposit deposit = new Deposit();
-            deposit.setDepositRate(((DepositDto) productDto).getDepositRate());
-            deposit.setMinSum(((DepositDto) productDto).getMinSum());
-            product = deposit;
-        }
-        productDao.create(product);
-    }
-
-    @Override
-    public ProductDto readById(String id) {
-        if (id == null) {
-            throw new IllegalArgumentException("An argument id can not be null");
-        }
-        Product product = productDao.read(Product.class, id);
-        return new ProductDto(
-                product.getId(),
-                product.getName(),
-                product.getDescription(),
-                product.getDurationInMonth());
-    }
-
-    @Override
     public <T extends ProductDto> List<T> readProducts(Class<T> clazz) {
         List<Product> products = productDao.readAllProducts();
         if (clazz.equals(LoanDto.class)) return (List<T>) products.stream()
@@ -90,7 +56,8 @@ public class ProductServiceImpl implements ProductService {
         Product product = productDao.read(Product.class, productId);
         Account account = new Account(Iban.random().toString(), openProductDto.getBalance(),
                 openProductDto.getCurrencyName(), LocalDate.now());
-        Card card = new Card(generateCardNumber(), LocalDate.now().plusYears(5), generateCvv());
+        Card card = new Card(generateCardNumber(),
+                LocalDate.now().plusMonths(product.getDurationInMonth()), generateCvv());
         card.setAccount(account);
         account.getCards().add(card);
         account.setProduct(product);
@@ -102,7 +69,9 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void addNewCardToExistingAccount(String iban) {
         Account account = accountDao.read(Account.class, iban);
-        Card card = new Card(generateCardNumber(), LocalDate.now().plusYears(5), generateCvv());
+        Card card = new Card(generateCardNumber(),
+                LocalDate.now().plusMonths(account.getProduct().getDurationInMonth()),
+                generateCvv());
         account.getCards().add(card);
         card.setAccount(account);
         accountDao.update(account);

@@ -3,9 +3,12 @@ package by.sep.service;
 import by.sep.dao.AccountDao;
 import by.sep.dao.CardDao;
 import by.sep.dto.AccountDto;
-import by.sep.dto.CardDto;
 import by.sep.pojo.Account;
 import by.sep.pojo.Card;
+import by.sep.pojo.product.Deposit;
+import by.sep.pojo.product.Loan;
+import by.sep.pojo.product.Product;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,27 +23,33 @@ public class AccountServiceImpl implements AccountService {
     AccountDao accountDao;
     @Autowired
     CardDao cardDao;
-    @Autowired
-    ProductService productService;
 
     @Override
     public List<AccountDto> readAccountsByClientId(String clientId) {
         List<Account> accounts = accountDao.readAccountsByClientId(clientId);
         List<AccountDto> accountDtos = new ArrayList<>();
-        accounts.forEach(account -> {
+        for (Account account : accounts) {
             List<Card> cards = cardDao.readCardsByIban(account.getIban());
-            List<CardDto> cardDtos = cards.stream()
-                    .map(card -> new CardDto(card.getNumber(), card.getExpiryDate(), card.getCvv()))
-                    .toList();
-            AccountDto accountDto = new AccountDto(
+            Product product = account.getProduct();
+            Product realProduct = (Product) Hibernate.unproxy(product);
+            String productName = realProduct.getName();
+            double rate = 0.0;
+
+            if (realProduct instanceof Loan loan) {
+                rate = loan.getLoanRate();
+            } else if (realProduct instanceof Deposit deposit) {
+                rate = deposit.getDepositRate();
+            }
+
+            accountDtos.add(new AccountDto(
                     account.getIban(),
-                    productService.readById(account.getProduct().getId()),
+                    productName,
+                    rate,
                     account.getBalance(),
                     account.getCurrencyName(),
-                    cardDtos
-            );
-            accountDtos.add(accountDto);
-        });
+                    cards
+            ));
+        }
         return accountDtos;
     }
 }

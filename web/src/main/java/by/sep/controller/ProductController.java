@@ -37,11 +37,8 @@ public class ProductController {
     }
 
     @GetMapping("products/open-{id}")
-    public ModelAndView getProductOpeningPage(@PathVariable("id") String id) {
-        ProductDto productDto = productService.readById(id);
-        ModelAndView modelAndView = new ModelAndView("open-product");
-        modelAndView.addObject(productDto);
-        return modelAndView;
+    public String getProductOpeningPage(@PathVariable("id") String id) {
+        return "open-product";
     }
 
     @PostMapping("products/open-{id}")

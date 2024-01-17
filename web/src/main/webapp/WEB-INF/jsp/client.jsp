@@ -25,15 +25,18 @@
             <c:forEach var="accountDto" items="${accountDtos}">
                 <div class="card">
                     <p>Account IBAN: ${accountDto.iban}</p>
-                    <p>Product Name: ${accountDto.productDto.name}</p>
+                    <p>Product Name: ${accountDto.productName}</p>
+                    <c:if test="${accountDto.rate != 0}">
+                        <p>Rate: ${accountDto.rate}</p>
+                    </c:if>
                     <p>Account Balance: ${accountDto.balance}</p>
                     <p>Account Currency: ${accountDto.currencyName}</p>
                     <p>Cards:</p>
 
-                    <c:forEach var="cardDto" items="${accountDto.cards}">
+                    <c:forEach var="card" items="${accountDto.cards}">
                         <div style="border: 1px solid #ddd; padding: 5px; margin-bottom: 5px;">
-                            <p>Card Number: ${cardDto.number}</p>
-                            <p>Expiry Date: ${cardDto.expiryDate}</p>
+                            <p>Card Number: ${card.number}</p>
+                            <p>Expiry Date: ${card.expiryDate}</p>
                         </div>
                     </c:forEach>
 
