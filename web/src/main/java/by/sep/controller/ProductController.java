@@ -36,23 +36,34 @@ public class ProductController {
         modelAndView.addObject("deposits", deposits);
         return modelAndView;
     }
+
     @Secured("ROLE_USER")
-    @GetMapping("products/open-{id}")
-    public String getProductOpeningPage(@PathVariable("id") String id) {
+    @GetMapping("products/open/{productType}/{id}/{sum}")
+    public String getProductOpeningPage(@PathVariable("productType") String productType,
+                                        @PathVariable("id") String productId,
+                                        @PathVariable("sum") Double sum) {
         return "open-product";
     }
+
     @Secured("ROLE_USER")
-    @PostMapping("products/open-{id}")
-    public String openProduct(Authentication authentication, @PathVariable("id") String productId,
-                              OpenProductDto dto) {
+    @PostMapping("products/open/{productType}/{id}/{sum}")
+    public ModelAndView openProduct(Authentication authentication,
+                                    @PathVariable("productType") String productType,
+                                    @PathVariable("id") String productId,
+                                    @PathVariable("sum") Double sum,
+                                    OpenProductDto dto) {
+        ModelAndView modelAndView = new ModelAndView("redirect:/client");
         if (authentication != null) {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
             String username = userDetails.getUsername();
             String clientId = authenticationService.getIdByUsername(username);
             productService.addProductToClient(clientId, productId, dto);
+            modelAndView.addObject("productType", productType);
+            modelAndView.addObject("sum", sum);
         }
-        return "redirect:/client";
+        return modelAndView;
     }
+
     @Secured("ROLE_USER")
     @GetMapping("client/add-card-{iban}")
     public String issueAdditionalCard(@PathVariable("iban") String iban) {

@@ -54,7 +54,8 @@
                                 </c:if>
                                 <td>
                                     <sec:authorize access="hasRole('ROLE_USER')">
-                                        <a class="btn btn-primary" href="/bank/products/open-${product.id}" role="button">Open Account</a>
+                                        <c:set var="maxMinSum" value="${(productType == 'Loans') ? product.maxSum : (productType == 'Deposits') ? product.minSum : '0'}" />
+                                        <a class="btn btn-primary" href="/bank/products/open/${productType.toLowerCase()}/${product.id}/${maxMinSum}" role="button">Open Account</a>
                                     </sec:authorize>
                                 </td>
                             </tr>
