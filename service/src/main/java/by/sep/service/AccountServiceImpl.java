@@ -26,7 +26,13 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public List<AccountDto> readAccountsByClientId(String clientId) {
+        if (clientId == null) {
+            throw new IllegalArgumentException("clientId cannot be null");
+        }
         List<Account> accounts = accountDao.readAccountsByClientId(clientId);
+        if (accounts == null) {
+            throw new IllegalStateException("Client don't have any account");
+        }
         List<AccountDto> accountDtos = new ArrayList<>();
         for (Account account : accounts) {
             List<Card> cards = cardDao.readCardsByIban(account.getIban());

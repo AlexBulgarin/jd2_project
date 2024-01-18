@@ -40,8 +40,7 @@ public class WebSecurityConfig {
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/client/**").hasRole("USER")
                         .anyRequest().authenticated()
-                )
-                .logout(Customizer.withDefaults())
+                ).logout((logout -> logout.logoutSuccessUrl("/index")))
         ;
         return http.build();
     }

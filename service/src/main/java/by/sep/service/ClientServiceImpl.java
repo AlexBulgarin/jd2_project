@@ -21,7 +21,7 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public void createClient(ClientDto clientDto) {
         if (clientDto == null) {
-            throw new IllegalArgumentException("An argument createClientDto can not be null");
+            throw new IllegalArgumentException("An argument createClientDto cannot be null");
         }
         Client client = new Client(
                 null,
@@ -34,7 +34,7 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public void createClientLogin(ClientLoginDto clientLoginDto) {
         if (clientLoginDto == null) {
-            throw new IllegalArgumentException("An argument createClientLoginDto can not be null");
+            throw new IllegalArgumentException("An argument createClientLoginDto cannot be null");
         }
         Client client = clientDao.readByEmail(clientLoginDto.getEmail());
         ClientLogin clientLogin = new ClientLogin(

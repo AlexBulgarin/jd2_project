@@ -20,6 +20,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.UUID;
 
 import static org.junit.Assert.*;
@@ -131,5 +132,13 @@ public class TransactionDaoImplTest {
         resultSet.next();
         int actualCount = resultSet.getInt(1);
         assertEquals(0, actualCount);
+    }
+
+    @Test
+    public void readTransactionsByIban() {
+        List<Transaction> transactions = dao.readTransactionsByIban(testRecipientIban, 0, 3);
+
+        assertNotNull(transactions);
+        assertEquals(1, transactions.size());
     }
 }

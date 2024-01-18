@@ -43,6 +43,8 @@
                     <div style="margin-top: 10px;">
                         <a class="btn btn-success" href="client/add-card-${accountDto.iban}" role="button">Issue Additional Card</a>
                         <a class="btn btn-success" href="client/transaction-${accountDto.iban}" role="button">Make Transaction</a>
+                        <a class="btn btn-success" href="client/transactions/${accountDto.iban}" role="button">See Transactions</a>
+                        <a class="btn btn-success" href="client/api/transactions/${accountDto.iban}" role="button">See Transactions JSON</a>
                     </div>
                 </div>
             </c:forEach>

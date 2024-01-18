@@ -18,6 +18,7 @@ public class WebInitializer implements ServletContainerInitializer {
         context.register(ServiceConfiguration.class);
         context.register(DataConfiguration.class);
         context.register(WebSecurityConfig.class);
+        context.register(RestConfiguration.class);
 
         DispatcherServlet dispatcherServlet = new DispatcherServlet(context);
 

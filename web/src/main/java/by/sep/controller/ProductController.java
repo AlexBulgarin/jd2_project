@@ -7,6 +7,7 @@ import by.sep.dto.ProductDto;
 import by.sep.security.AuthenticationService;
 import by.sep.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -35,12 +36,12 @@ public class ProductController {
         modelAndView.addObject("deposits", deposits);
         return modelAndView;
     }
-
+    @Secured("ROLE_USER")
     @GetMapping("products/open-{id}")
     public String getProductOpeningPage(@PathVariable("id") String id) {
         return "open-product";
     }
-
+    @Secured("ROLE_USER")
     @PostMapping("products/open-{id}")
     public String openProduct(Authentication authentication, @PathVariable("id") String productId,
                               OpenProductDto dto) {
@@ -52,7 +53,7 @@ public class ProductController {
         }
         return "redirect:/client";
     }
-
+    @Secured("ROLE_USER")
     @GetMapping("client/add-card-{iban}")
     public String issueAdditionalCard(@PathVariable("iban") String iban) {
         productService.addNewCardToExistingAccount(iban);

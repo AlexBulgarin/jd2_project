@@ -17,6 +17,7 @@ public class CardDaoImpl extends BaseDaoImpl<Card> implements CardDao {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Card> readCardsByIban(String iban) {
         return sessionFactory.getCurrentSession()
                 .createQuery("SELECT c FROM Card c JOIN c.account a WHERE a.iban = :iban",

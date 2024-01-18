@@ -10,7 +10,7 @@
     <label for="amount">Input Amount</label>
     <input type="number" class="form-control" id="amount" name="amount" min="1"><br>
 
-    <button type="submit">Make Transaction</button>
+    <button type="submit" class="btn btn-primary">Make Transaction</button>
 </form>
 
 <%@include file="footer.jsp" %>
