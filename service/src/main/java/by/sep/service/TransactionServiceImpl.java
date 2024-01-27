@@ -65,35 +65,19 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     private void validateArguments(String senderIban, String recipientCardNumber, double amount) {
-        if (senderIban == null) {
-            throw new IllegalArgumentException("An argument senderIban cannot be null");
-        }
-        if (recipientCardNumber == null) {
+        if (senderIban == null) throw new IllegalArgumentException("An argument senderIban cannot be null");
+        if (recipientCardNumber == null)
             throw new IllegalArgumentException("An argument recipientCardNumber cannot be null");
-        }
-        if (amount == 0) {
-            throw new IllegalArgumentException("An argument amount cannot be 0");
-        }
+        if (amount == 0) throw new IllegalArgumentException("An argument amount cannot be 0");
         Account senderAccount = accountDao.read(Account.class, senderIban);
-        if (senderAccount == null) {
-            throw new IllegalArgumentException("Account not found for id:" + senderIban);
-        }
         Card recipientCard = cardDao.read(Card.class, recipientCardNumber);
-        if (recipientCard == null) {
-            throw new IllegalArgumentException("Card not found with number:" + recipientCardNumber);
-        }
         Account recipientAccount = recipientCard.getAccount();
-        if (senderAccount.equals(recipientAccount)) {
+        if (senderAccount.equals(recipientAccount))
             throw new IllegalArgumentException("Sender and recipient accounts are equal.");
-        }
-        if (!senderAccount.getCurrencyName().equals(recipientAccount.getCurrencyName())) {
+        if (!senderAccount.getCurrencyName().equals(recipientAccount.getCurrencyName()))
             throw new IllegalArgumentException("Sender account and recipient accounts currencies are not equal.");
-        }
-        if (amount <= 0) {
-            throw new IllegalArgumentException("Transfer amount should be positive");
-        }
-        if (senderAccount.getBalance() < amount) {
+        if (amount <= 0) throw new IllegalArgumentException("Transfer amount should be positive");
+        if (senderAccount.getBalance() < amount)
             throw new IllegalArgumentException("You don't have enough money for transfer.");
-        }
     }
 }

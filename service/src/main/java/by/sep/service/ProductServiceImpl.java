@@ -52,24 +52,12 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void addProductToClient(String clientId, String productId, OpenProductDto openProductDto) {
-        if (clientId == null) {
-            throw new IllegalArgumentException("An argument clientId cannot be null");
-        }
-        if (productId == null) {
-            throw new IllegalArgumentException("An argument productId cannot be null");
-        }
-        if (openProductDto == null) {
-            throw new IllegalArgumentException("An argument openProductDto cannot be null");
-        }
+        if (clientId == null) throw new IllegalArgumentException("An argument clientId cannot be null");
+        if (productId == null) throw new IllegalArgumentException("An argument productId cannot be null");
+        if (openProductDto == null) throw new IllegalArgumentException("An argument openProductDto cannot be null");
 
         Client client = clientDao.read(Client.class, clientId);
-        if (client == null) {
-            throw new IllegalArgumentException("Client not found for id: " + clientId);
-        }
         Product product = productDao.read(Product.class, productId);
-        if (product == null) {
-            throw new IllegalArgumentException("Product not found for id: " + productId);
-        }
         Account account = new Account(Iban.random().toString(), openProductDto.getBalance(),
                 openProductDto.getCurrencyName(), LocalDate.now());
         Card card = new Card(generateCardNumber(),
@@ -84,13 +72,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void addNewCardToExistingAccount(String iban) {
-        if (iban == null) {
-            throw new IllegalArgumentException("An argument iban cannot be null");
-        }
+        if (iban == null) throw new IllegalArgumentException("An argument iban cannot be null");
         Account account = accountDao.read(Account.class, iban);
-        if (account == null) {
-            throw new IllegalArgumentException("Account not found for id: " + iban);
-        }
         Card card = new Card(generateCardNumber(),
                 LocalDate.now().plusMonths(account.getProduct().getDurationInMonth()),
                 generateCvv());
