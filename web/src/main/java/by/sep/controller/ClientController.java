@@ -31,13 +31,16 @@ public class ClientController {
     }
 
     @PostMapping("/register")
-    public String getLoginCreation(ClientLoginDto dto) {
+    public ModelAndView getLoginCreation(ClientLoginDto dto) {
+        ModelAndView modelAndView = new ModelAndView("index");
         try {
             clientService.createClientLogin(dto);
-        } catch (IllegalArgumentException e) {
-            return "error-page";
+        } catch (Exception e) {
+            modelAndView.addObject("errorMessage", e.getMessage());
+            modelAndView.setViewName("error-page");
+            return modelAndView;
         }
-        return "index";
+        return modelAndView;
     }
 
     @Secured("ROLE_USER")

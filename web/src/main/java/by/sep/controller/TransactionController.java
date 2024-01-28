@@ -28,11 +28,18 @@ public class TransactionController {
 
     @Secured("ROLE_USER")
     @PostMapping("client/transaction-{senderIban}")
-    public String makeTransaction(@PathVariable("senderIban") String senderIban,
-                                  @RequestParam("recipientCardNumber") String recipientCardNumber,
-                                  @RequestParam("amount") double amount) {
-        transactionService.makeTransaction(senderIban, recipientCardNumber, amount);
-        return "redirect:/client";
+    public ModelAndView makeTransaction(@PathVariable("senderIban") String senderIban,
+                                        @RequestParam("recipientCardNumber") String recipientCardNumber,
+                                        @RequestParam("amount") double amount) {
+        ModelAndView modelAndView = new ModelAndView("redirect:/client");
+        try {
+            transactionService.makeTransaction(senderIban, recipientCardNumber, amount);
+        } catch (Exception e) {
+            modelAndView.addObject("errorMessage", e.getMessage());
+            modelAndView.setViewName("error-page");
+            return modelAndView;
+        }
+        return modelAndView;
     }
 
     @GetMapping("client/transactions/{iban}")

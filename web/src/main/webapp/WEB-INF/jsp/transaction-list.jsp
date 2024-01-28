@@ -17,7 +17,14 @@
         <c:forEach var="transaction" items="${transactions}">
             <tr>
                 <td><a>${transaction.senderIban}</a></td>
-                <td><a>${transaction.sum}</a></td>
+                <c:choose>
+                    <c:when test="${iban == transaction.senderIban}">
+                        <td><a>-${transaction.sum}</a></td>
+                    </c:when>
+                    <c:otherwise>
+                        <td><a>+${transaction.sum}</a></td>
+                    </c:otherwise>
+                </c:choose>
                 <td><a>${transaction.transactionDateTime}</a></td>
                 <td><a>${transaction.recipientIban}</a></td>
             </tr>
